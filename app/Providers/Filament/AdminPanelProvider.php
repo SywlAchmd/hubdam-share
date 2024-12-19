@@ -28,7 +28,8 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             // ->brandLogo(asset('assets/images/logo.png'))
-            ->brandLogo(fn () => view('filament.admin.logo'))
+            ->brandName('Hubdam Share')
+            ->brandLogo(fn() => view('filament.admin.logo'))
             ->brandLogoHeight('2.5rem')
             ->favicon(asset('favicon.ico'))
             ->id('admin')
