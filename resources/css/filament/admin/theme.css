@@ -1,0 +1,11 @@
+@import "../../../../vendor/filament/filament/resources/css/theme.css";
+
+@config './tailwind.config.js';
+
+:-moz-focusring {
+    outline: none;
+}
+
+.fi-logo {
+    @apply rounded-lg;
+}
