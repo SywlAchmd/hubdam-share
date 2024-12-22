@@ -91,6 +91,17 @@ class PDFResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('download')
+                    ->label('Download')
+                    ->color('info')
+                    ->icon("heroicon-m-arrow-down-tray")
+                    ->action(function ($record) {
+                        $file = $record->getMedia('file-pdf')->first();
+
+                        return response()->download($file->getPath(), $file->name, [
+                            'Content-type' => $file->mime_type
+                        ]);
+                    })
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
