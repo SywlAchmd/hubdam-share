@@ -29,11 +29,6 @@ class UserResource extends Resource
 
     protected static ?string $slug = 'users';
 
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()->where('role', '!=', '0');
-    }
-
     public static function form(Form $form): Form
     {
         return $form
@@ -93,6 +88,7 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('role', 'asc')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->icon(fn(User $record) => $record->image ? Storage::disk('public')->url($record->image) : asset('assets/images/default_avatar.jpg'))
@@ -125,6 +121,7 @@ class UserResource extends Resource
                         'denhubdam' => 'Denhubdam'
                     })
             ])
+            ->modifyQueryUsing(fn(Builder $query) => $query->where('role', '!=', '0'))
             ->filters([
                 Tables\Filters\SelectFilter::make('role')
                     ->native(false)

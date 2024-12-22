@@ -53,7 +53,6 @@ class PDFResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->recordAction(null)
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Nama')
@@ -91,6 +90,11 @@ class PDFResource extends Resource
                         return FileHelper::formatFileSize($files->sum('size'));
                     })
             ])
+            ->modifyQueryUsing(function (Builder $query) {
+                $query->whereHas('media', function (Builder $query) {
+                    $query->where('collection_name', 'file-pdf');
+                });
+            })
             ->filters([
                 //
             ])
@@ -134,6 +138,9 @@ class PDFResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ])
+            ->emptyStateActions([
+                Tables\Actions\CreateAction::make(),
             ]);
     }
 

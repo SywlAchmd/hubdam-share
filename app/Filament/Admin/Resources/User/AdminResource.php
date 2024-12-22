@@ -39,11 +39,6 @@ class AdminResource extends Resource
         return auth()->user()->role == '0';
     }
 
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()->where('role', '!=', '2');
-    }
-
     public static function form(Form $form): Form
     {
         return $form
@@ -142,6 +137,7 @@ class AdminResource extends Resource
                         'denhubdam' => 'Denhubdam'
                     })
             ])
+            ->modifyQueryUsing(fn(Builder $query) => $query->where('role', '!=', '2'))
             ->filters([
                 Tables\Filters\SelectFilter::make('role')
                     ->native(false)
