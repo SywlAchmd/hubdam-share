@@ -32,9 +32,10 @@ class FileHelper
     if ($files->count() == 1) {
       $file = $files->first();
 
-      return response()->download($file->getPath(), $file->name, [
-        'Content-type' => $file->mime_type
-      ]);
+      return response()->download(
+        $file->getPath(),
+        $file->name . '.' . explode('.', $file->file_name)[1]
+      );
     }
 
     $zip = new ZipArchive();

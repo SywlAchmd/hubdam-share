@@ -44,6 +44,7 @@ class ExcelResource extends Resource
                     ->label('Upload File')
                     ->acceptedFileTypes([
                         "text/csv",
+                        'application/vnd.ms-excel',
                         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                     ])
                     ->collection('file-excel')
