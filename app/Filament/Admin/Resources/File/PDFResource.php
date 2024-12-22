@@ -18,13 +18,13 @@ class PDFResource extends Resource
 {
     protected static ?string $model = File::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'phosphor-file-pdf';
 
     protected static ?string $navigationLabel = 'PDF';
 
     protected static ?string $navigationGroup = 'Files';
 
-    protected static ?int $navigationsort = 1;
+    protected static ?int $navigationSort = 1;
 
     protected static ?string $slug = 'pdf';
 

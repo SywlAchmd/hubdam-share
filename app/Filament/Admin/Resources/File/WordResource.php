@@ -19,13 +19,13 @@ class WordResource extends Resource
 {
     protected static ?string $model = File::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'phosphor-microsoft-word-logo';
 
     protected static ?string $navigationLabel = 'Word';
 
     protected static ?string $navigationGroup = 'Files';
 
-    protected static ?int $navigationsort = 2;
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $slug = 'word';
 

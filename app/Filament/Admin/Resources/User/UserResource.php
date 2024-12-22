@@ -19,13 +19,13 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'phosphor-user';
 
     protected static ?string $navigationLabel = 'User';
 
     protected static ?string $navigationGroup = 'User';
 
-    protected static ?int $navigationsort = 2;
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $slug = 'users';
 
