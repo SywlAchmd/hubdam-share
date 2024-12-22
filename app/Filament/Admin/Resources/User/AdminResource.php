@@ -27,6 +27,8 @@ class AdminResource extends Resource
 
     protected static ?int $navigationsort = 1;
 
+    protected static ?string $slug = 'admins';
+
     public static function getPluralLabel(): ?string
     {
         return ('Admin');
@@ -95,6 +97,7 @@ class AdminResource extends Resource
                     ->schema([
                         Forms\Components\FileUpload::make('image')
                             ->image()
+                            ->acceptedFileTypes(['image/*'])
                             ->imageEditor()
                             ->imageCropAspectRatio('1:1')
                             ->directory('user-images')

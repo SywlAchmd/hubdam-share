@@ -27,6 +27,8 @@ class UserResource extends Resource
 
     protected static ?int $navigationsort = 2;
 
+    protected static ?string $slug = 'users';
+
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->where('role', '!=', '0');
@@ -79,6 +81,7 @@ class UserResource extends Resource
                     ->schema([
                         Forms\Components\FileUpload::make('image')
                             ->image()
+                            ->acceptedFileTypes(['image/*'])
                             ->imageEditor()
                             ->imageCropAspectRatio('1:1')
                             ->directory('user-images')
