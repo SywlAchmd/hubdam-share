@@ -104,35 +104,7 @@ class PDFResource extends Resource
                     ->label('Download')
                     ->color('info')
                     ->icon("heroicon-m-arrow-down-tray")
-                    ->action(function ($record) {
-                        $files = $record->getMedia('file-pdf');
-
-                        if ($files->count() == 1) {
-                            $file = $files->first();
-
-                            return response()->download($file->getPath(), $file->name, [
-                                'Content-type' => $file->mime_type
-                            ]);
-                        }
-
-                        $zip = new ZipArchive();
-
-                        $zipFileName = 'files-pdf-' . now()->format('Y-m-d_H-i-s') . '.zip';
-                        $zipPath = storage_path('app/public/' . $zipFileName);
-
-                        if ($zip->open($zipPath, ZipArchive::CREATE) === true) {
-                            foreach ($files as $file) {
-                                $filePath = $file->getPath();
-                                $fileName = $file->name . '.pdf';
-
-                                $zip->addFile($filePath, $fileName);
-                            }
-
-                            $zip->close();
-                        }
-
-                        return response()->download($zipPath)->deleteFileAfterSend(true);
-                    })
+                    ->action(fn($record) => FileHelper::downloadFiles($record, 'file-pdf')),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

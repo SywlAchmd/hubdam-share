@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use ZipArchive;
+
 class FileHelper
 {
   public static function formatFileSize($bytes)
@@ -21,5 +23,37 @@ class FileHelper
     }
 
     return $bytes;
+  }
+
+  public static function downloadFiles($record, $collection)
+  {
+    $files = $record->getMedia($collection);
+
+    if ($files->count() == 1) {
+      $file = $files->first();
+
+      return response()->download($file->getPath(), $file->name, [
+        'Content-type' => $file->mime_type
+      ]);
+    }
+
+    $zip = new ZipArchive();
+
+    $zipFileName = 'files-' . (explode('-', $collection)[1]) . now()->format('Y-m-d_H-i-s') . '.zip';
+    $zipPath = storage_path('app/public/' . $zipFileName);
+
+    if ($zip->open($zipPath, ZipArchive::CREATE) === true) {
+      foreach ($files as $file) {
+        $filePath = $file->getPath();
+        $fileExtension = (explode('.', $file->file_name)[1]);
+        $fileName = "{$file->name}.{$fileExtension}";
+
+        $zip->addFile($filePath, $fileName);
+      }
+
+      $zip->close();
+    }
+
+    return response()->download($zipPath)->deleteFileAfterSend(true);
   }
 }
