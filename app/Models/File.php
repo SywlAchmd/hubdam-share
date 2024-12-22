@@ -12,10 +12,7 @@ class File extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-    protected $fillable = [
-        'user_id',
-    ];
-    // protected $guarded = [];
+    protected $guarded = [];
 
     public function user(): BelongsTo
     {

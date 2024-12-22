@@ -8,13 +8,9 @@ use App\Helpers\FileHelper;
 use App\Models\File;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Storage;
 
 class PDFResource extends Resource
 {
@@ -52,8 +48,11 @@ class PDFResource extends Resource
                 //     }),
                 // Forms\Components\TextInput::make('size')
                 Forms\Components\SpatieMediaLibraryFileUpload::make('File Upload')
+                    ->label('Upload File')
                     ->acceptedFileTypes(['application/pdf'])
                     ->collection('file-pdf')
+                    ->columnSpanFull()
+                    ->required()
             ]);
     }
 
