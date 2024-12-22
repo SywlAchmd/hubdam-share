@@ -65,8 +65,8 @@ class AdminResource extends Resource
                             ->options([
                                 '0' => 'Superadmin',
                                 '1' => 'Admin',
-                                '2' => 'Staff',
                             ])
+                            ->default('1')
                             ->native(false)
                             ->required(),
                         Forms\Components\Select::make('staff')

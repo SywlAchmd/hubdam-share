@@ -67,6 +67,8 @@ class UserResource extends Resource
                                 'renproggar' => 'Renproggar',
                                 'denhubdam' => 'Denhubdam'
                             ])
+                            ->default(fn() => auth()->user()->staff ?? null)
+                            ->disabled(auth()->user()->role != 0)
                             ->columnSpanFull()
                             ->native(false)
                     ])
