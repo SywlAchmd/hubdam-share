@@ -11,6 +11,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use ZipArchive;
 
 class PDFResource extends Resource
@@ -70,14 +71,25 @@ class PDFResource extends Resource
 
                         return '<ul>' . $fileList . '</ul>';
                     })
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query->whereHas(
+                            'media',
+                            fn(Builder $query) =>
+                            $query->where('name', 'like', '%' . $search . '%')
+                        );
+                    })
                     ->wrap()
                     ->html(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label('Waktu')
                     ->formatStateUsing(fn($state) => $state->format('H:i')),
                 Tables\Columns\TextColumn::make('Size')
-                    ->label('Size File')
-                    ->getStateUsing(fn($record) => FileHelper::formatFileSize($record->getMedia('file-pdf')->first()->size))
+                    ->label('Size Files')
+                    ->getStateUsing(function ($record) {
+                        $files = $record->getMedia('file-pdf');
+
+                        return FileHelper::formatFileSize($files->sum('size'));
+                    })
             ])
             ->filters([
                 //
