@@ -11,6 +11,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use ZipArchive;
 
 class PDFResource extends Resource
 {
@@ -37,20 +38,12 @@ class PDFResource extends Resource
             ->schema([
                 Forms\Components\Hidden::make('user_id')
                     ->default(auth()->user()->id),
-                // Forms\Components\FileUpload::make('fileName')
-                //     ->acceptedFileTypes(['application/pdf'])
-                //     ->directory('file-pdf')
-                //     ->storeFileNamesIn('name')
-                //     ->live()
-                //     // ->afterStateUpdated(fn(Set $set, $state) => $set('size', Storage::disk('public')->size($state->fileName))),
-                //     ->afterStateUpdated(function (Set $set, $state) {
-                //         dd($state->filename);
-                //     }),
-                // Forms\Components\TextInput::make('size')
                 Forms\Components\SpatieMediaLibraryFileUpload::make('File Upload')
                     ->label('Upload File')
                     ->acceptedFileTypes(['application/pdf'])
                     ->collection('file-pdf')
+                    ->multiple()
+                    ->reorderable()
                     ->columnSpanFull()
                     ->required()
             ]);
@@ -69,14 +62,15 @@ class PDFResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('Files')
                     ->getStateUsing(function ($record) {
-                        $href = '
-                                <a href="' . $record->getMedia('file-pdf')->first()->getUrl() . '" target="_blank" class="text-blue-400 underline text-sm">
-                        ';
+                        $files = $record->getMedia('file-pdf');
 
-                        $fileName = $href . $record->getMedia('file-pdf')->first()->name . '</a>';
+                        $fileList = $files->map(function ($file) {
+                            return '<li><a href="' . $file->getUrl() . '" target="_blank" class="text-blue-400 underline text-sm">' . $file->name . '</a></li>';
+                        })->implode('');
 
-                        return $fileName;
+                        return '<ul>' . $fileList . '</ul>';
                     })
+                    ->wrap()
                     ->html(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label('Waktu')
@@ -95,11 +89,33 @@ class PDFResource extends Resource
                     ->color('info')
                     ->icon("heroicon-m-arrow-down-tray")
                     ->action(function ($record) {
-                        $file = $record->getMedia('file-pdf')->first();
+                        $files = $record->getMedia('file-pdf');
 
-                        return response()->download($file->getPath(), $file->name, [
-                            'Content-type' => $file->mime_type
-                        ]);
+                        if ($files->count() == 1) {
+                            $file = $files->first();
+
+                            return response()->download($file->getPath(), $file->name, [
+                                'Content-type' => $file->mime_type
+                            ]);
+                        }
+
+                        $zip = new ZipArchive();
+
+                        $zipFileName = 'files-pdf-' . now()->format('Y-m-d_H-i-s') . '.zip';
+                        $zipPath = storage_path('app/public/' . $zipFileName);
+
+                        if ($zip->open($zipPath, ZipArchive::CREATE) === true) {
+                            foreach ($files as $file) {
+                                $filePath = $file->getPath();
+                                $fileName = $file->name . '.pdf';
+
+                                $zip->addFile($filePath, $fileName);
+                            }
+
+                            $zip->close();
+                        }
+
+                        return response()->download($zipPath)->deleteFileAfterSend(true);
                     })
             ])
             ->bulkActions([
