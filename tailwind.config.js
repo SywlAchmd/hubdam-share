@@ -19,13 +19,33 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+        poppins: ["Poppins", "sans-serif"],
       },
       colors: {
         "forest-green": "#5C6124",
+        "forest-green-dark": "#494D1C",
         "light-gray": "#D9D9D9",
         "olive-gray": "#797A6D",
       },
     },
+    screens: {
+      lg: { min: "835px", max: "1040px" },
+      md: { min: "526px", max: "834px" },
+      sm: { max: "525px" },
+      // tablet to 1040px
+      mdlg: { min: "526px", max: "1040px" },
+      // phone to 1040px
+      smdlg: { max: "1040px" },
+      // phone to tablet
+      smd: { max: "834px" },
+    },
+    typography: () => ({
+      DEFAULT: {
+        css: {
+          maxWidth: "1152px",
+        },
+      },
+    }),
   },
 
   plugins: [forms, typography],
