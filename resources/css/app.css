@@ -6,6 +6,13 @@
 
 /* ------------------ Custom Base Styles --------------------- */
 @layer components {
+  .section-padding-x {
+    @apply px-36 sm:px-6 mdlg:px-16;
+  }
+
+  .single-section-padding-y {
+    @apply py-16 sm:py-10;
+  }
 }
 
 /* ----------------------------------------------------------- */
