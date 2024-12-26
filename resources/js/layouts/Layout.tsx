@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 import { TLayoutProps } from "@/types/layouts/TLayout";
 
 export default function Layout({ children }: TLayoutProps) {
@@ -9,7 +10,9 @@ export default function Layout({ children }: TLayoutProps) {
         <Navbar />
       </header>
 
-      <main>{children}</main>
+      <main className="">{children}</main>
+
+      <Footer />
     </section>
   );
 }
