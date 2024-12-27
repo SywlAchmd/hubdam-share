@@ -10,8 +10,24 @@
     @apply px-36 sm:px-6 mdlg:px-16;
   }
 
+  .single-section-padding {
+    @apply px-36 py-16 sm:px-6 mdlg:px-16;
+  }
+
+  .section-padding-x {
+    @apply px-36 sm:px-6 mdlg:px-16;
+  }
+
   .single-section-padding-y {
     @apply py-16 sm:py-10;
+  }
+
+  .section-gap {
+    @apply gap-9;
+  }
+
+  .section-title {
+    @apply border-l-8 border-solid border-forest-green px-4 text-3xl font-bold sm:text-2xl sm:border-l-4;
   }
 }
 

@@ -39,13 +39,6 @@ export default {
       // phone to tablet
       smd: { max: "834px" },
     },
-    typography: () => ({
-      DEFAULT: {
-        css: {
-          maxWidth: "1152px",
-        },
-      },
-    }),
   },
 
   plugins: [forms, typography],
