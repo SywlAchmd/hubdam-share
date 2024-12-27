@@ -6,12 +6,8 @@ import { TLayoutProps } from "@/types/layouts/TLayout";
 export default function Layout({ children }: TLayoutProps) {
   return (
     <section className="font-poppins">
-      <header>
-        <Navbar />
-      </header>
-
+      <Navbar />
       <main className="">{children}</main>
-
       <Footer />
     </section>
   );

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PageContentController;
 use Illuminate\Support\Facades\Route;
 
-Route::inertia('/', 'Beranda');
+Route::get('/', [PageContentController::class, 'index']);
