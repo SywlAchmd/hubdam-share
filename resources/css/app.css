@@ -27,7 +27,15 @@
   }
 
   .section-title {
-    @apply border-l-8 border-solid border-forest-green px-4 text-3xl font-bold sm:text-2xl sm:border-l-4;
+    @apply border-l-8 border-solid border-forest-green px-4 text-3xl font-bold sm:border-l-4 sm:text-2xl;
+  }
+
+  .section-bg {
+    @apply h-fit w-fit rounded-lg bg-white shadow-lg;
+  }
+
+  .toast-sonner {
+    @apply p-4;
   }
 }
 
@@ -199,5 +207,17 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .join-forest-green .join-item {
+    @apply bg-white text-forest-green;
+  }
+
+  .join-forest-green .join-item.btn-active {
+    @apply bg-forest-green text-white;
+  }
+
+  .join-forest-green .join-item.btn-disabled {
+    @apply bg-gray-100 text-gray-400;
   }
 }
