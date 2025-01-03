@@ -6,6 +6,12 @@ use ZipArchive;
 
 class FileHelper
 {
+  /**
+   * Format file size to a human-readable format (KB, MB, GB).
+   * 
+   * @param int $bytes File size in bytes.
+   * @return string Formatted file size.
+   */
   public static function formatFileSize($bytes)
   {
     if ($bytes >= 1073741824) {
@@ -25,6 +31,12 @@ class FileHelper
     return $bytes;
   }
 
+  /**
+   * Download files or create a ZIP file for multiple files and download.
+   * @param mixed $record Record containing the media files.
+   * @param string $collection Name of the media collection.
+   * @return \Illuminate\Http\Response Download response for the file(s).
+   */
   public static function downloadFiles($record, $collection)
   {
     $files = $record->getMedia($collection);
