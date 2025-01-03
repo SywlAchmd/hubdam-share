@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\PageContent;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class PageContentController extends Controller
 {
-    public function index()
+    /**
+     * Display Beranda
+     * @return Response
+     */
+    public function index(): Response
     {
         $pageContent = PageContent::all();
         $vision = $pageContent->where('type', 'vision')->first();
