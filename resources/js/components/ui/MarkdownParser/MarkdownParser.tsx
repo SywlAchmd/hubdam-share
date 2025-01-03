@@ -1,4 +1,3 @@
-import React from "react";
 import ReactMarkdown from "react-markdown";
 import { MARKDOWN_PARSER_COMPONENTS_CUSTOMIZATION } from "@/constants/components/MarkdownParserConstants";
 
