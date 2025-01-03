@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { navLinksId } from "@/constants/layouts/NavbarConstants";
 import { Link, usePage } from "@inertiajs/react";
-import { TPageProps } from "@/types/layouts/TPage";
 import { TNavLinksItem, TNavLinksChildren } from "@/types/layouts/TNavLinks";
 import { FaChevronDown } from "react-icons/fa";
 import { RiUserSettingsLine, RiLogoutBoxRLine } from "react-icons/ri";
 
 export default function Navbar() {
-  const { appName } = usePage<TPageProps>().props;
+  const { appName } = usePage().props;
   const currentPathname = window.location.pathname;
   const [navLinks, setNavLinks] = useState(navLinksId.map((item) => item));
   const [isDropdownOpened, setIsDropdownOpened] = useState(false);
@@ -136,7 +135,7 @@ export default function Navbar() {
               className={`${isProfileDropdownOpened ? "" : "hidden"} absolute right-0 mt-2 w-32 divide-y divide-solid divide-neutral-600 divide-opacity-25 overflow-hidden rounded-lg border-2 border-solid border-light-gray bg-white shadow-md`}
             >
               <Link
-                href="/profile"
+                href={route("profile.edit")}
                 className="flex items-center gap-2 px-4 py-2 text-sm hover:font-bold"
                 onClick={handleProfileLinkClick}
               >
@@ -145,7 +144,8 @@ export default function Navbar() {
               </Link>
 
               <Link
-                href="/logout"
+                method="post"
+                href={route("logout")}
                 className="flex items-center gap-2 px-4 py-2 text-sm hover:font-bold"
                 onClick={handleProfileLinkClick}
               >

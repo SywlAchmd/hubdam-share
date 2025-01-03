@@ -1,14 +1,16 @@
-import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { TLayoutProps } from "@/types/layouts/TLayout";
+import { PropsWithChildren } from "react";
+import { usePage } from "@inertiajs/react";
 
-export default function Layout({ children }: TLayoutProps) {
+export default function Layout({ children }: PropsWithChildren) {
+  const { auth } = usePage().props;
+
   return (
     <section className="font-poppins">
-      <Navbar />
+      {auth.user && <Navbar />}
       <main className="">{children}</main>
-      <Footer />
+      {auth.user && <Footer />}
     </section>
   );
 }

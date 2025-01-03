@@ -1,12 +1,12 @@
-import React from "react";
 import { Hero } from "@/layouts";
 import VisiMisiCard from "@/components/pages/VisiMisiCard";
+import { TBerandaProps } from "@/types/components/TBeranda";
+import { Head } from "@inertiajs/react";
 
-export default function Beranda({ vision, mission }) {
-  console.log(vision, mission);
-
+export default function Beranda({vision, mission}: TBerandaProps) {
   return (
     <>
+      <Head title="Beranda" />
       <Hero pageName="Beranda" />
       <section className="single-section-padding-y flex w-full items-center justify-between sm:justify-center">
         <span className="h-[50px] w-1/5 bg-white sm:hidden" />

@@ -1,4 +1,3 @@
-import React from "react";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 

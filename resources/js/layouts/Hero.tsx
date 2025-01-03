@@ -1,7 +1,4 @@
-import { THeroProps } from "@/types/layouts/THero";
-import React from "react";
-
-export default function Hero({ pageName }: THeroProps) {
+export default function Hero({ pageName }: { pageName: string }) {
   return (
     <div className="flex w-full flex-col">
       <div
