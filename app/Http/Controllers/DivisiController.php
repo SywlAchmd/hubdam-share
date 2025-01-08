@@ -9,25 +9,36 @@ use Inertia\Inertia;
 class DivisiController extends Controller
 {
     /**
-     * fetching data base on staff route
-     * @param uri $url
-     * @return array $staff
+     * Fetching data based on staff type
+     *
+     * @param string $uri
+     * @param Request $request
+     * @return \Inertia\Response
      */
-    public function index($uri)
+    public function index($uri, Request $request)
     {
-        $staffKey = explode('-', $uri)[1] ?? null;
+        $type = explode('-', $uri)[1];
 
-        if (!$staffKey) {
+        if (!$type) {
             return Inertia::render('Divisi/Staff', [
                 'staff' => [],
+                'type' => 'Unknown',
             ]);
         }
 
-        $staff = User::where('staff', $staffKey)->paginate(6);
+        $query = User::query();
+
+        $query->where('staff', $type);
+
+        if ($request->has('search') && $request->search !== '') {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $staff = $query->paginate(6);
 
         return Inertia::render('Divisi/Staff', [
             'staff' => $staff,
-            'type' => $staffKey
+            'type' => $type,
         ]);
     }
 }
