@@ -8,19 +8,14 @@ export default function Footer() {
         <section className="flex flex-col gap-3">
           <h4 className="text-2xl font-black italic text-white">HUBDAM XIV / HASANUDDIN</h4>
           <section className="flex gap-2">
-            <a
-              title="social media"
-              target="_blank"
-              href={"https://web.facebook.com/pemdes.tritiro"}
-              className="rounded-full bg-white p-1"
-            >
+            <a title="social media" target="_blank" href={"#"} className="rounded-full bg-white p-1">
               <FaFacebook size={30} color="black" />
             </a>
 
             <a
               title="social media"
               target="_blank"
-              href={"https://www.instagram.com/tritirodesawisata/"}
+              href={"https://www.instagram.com/hubdamxivhasanuddin?igsh=MXAydGRwYjl6MXZtMA=="}
               className="rounded-full bg-white p-1"
             >
               <FaInstagram size={30} color="black" />

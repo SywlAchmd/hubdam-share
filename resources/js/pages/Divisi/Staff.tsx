@@ -1,7 +1,7 @@
 import CardName from "@/components/pages/CardName";
 import { Hero } from "@/layouts";
 import { TStaffProps } from "@/types/components/TStaff";
-import { Head, Link, router, usePage } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import InputSearch from "@/components/molecules/InputSearch";
 import { useState } from "react";
 
@@ -29,8 +29,8 @@ export default function Staff({ staff, type }: TStaffProps) {
   return (
     <>
       <Head title="Divisi" />
-      <Hero pageName={type} />
-      <section className="single-section-padding grid min-h-[80vh]">
+      <Hero pageName={type} bgImage="divisi-bg.png" uppercase={true} />
+      <section className="single-section-padding grid min-h-[80vh] gap-5">
         <section className="flex items-center justify-end">
           <InputSearch value={search} onChange={setSearch} onSearch={handleSearch} onReset={handleReset} />
         </section>
@@ -43,7 +43,7 @@ export default function Staff({ staff, type }: TStaffProps) {
           )}
         </section>
 
-        <section className="mt-5 flex justify-end">
+        <section className="flex justify-end">
           <div className="join-forest-green join">
             {pagination.links.map((link, index) => (
               <Link
