@@ -58,6 +58,7 @@ class ExcelResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('updated_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Nama')
@@ -86,7 +87,7 @@ class ExcelResource extends Resource
                     ->html(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label('Waktu')
-                    ->formatStateUsing(fn($state) => $state->format('H:i')),
+                    ->formatStateUsing(fn($state) => $state->format('d M Y, H:i')),
                 Tables\Columns\TextColumn::make('Size')
                     ->label('Size Files')
                     ->getStateUsing(function ($record) {
