@@ -15,11 +15,12 @@ class FileUploadChart extends ChartWidget
         return "Menampilkan semua file yang diupload setiap bulannya";
     }
 
-    protected function getFileDataByType(string $type): array
+    protected function getFileDataByType(string $type, int $year): array
     {
         $fileData = DB::table('media')
             ->selectRaw('MONTH(created_at) as month, COUNT(*) as count')
             ->where('collection_name', $type)
+            ->whereYear('created_at', $year)
             ->groupBy(DB::raw('MONTH(created_at)'))
             ->pluck('count', 'month');
 
@@ -32,23 +33,25 @@ class FileUploadChart extends ChartWidget
         return array_values($monthlyData);
     }
 
-    // protected function getFilters(): ?array
-    // {
-    //     return DB::table('media')
-    //         ->selectRaw('YEAR(created_at) as year')
-    //         ->distinct()
-    //         ->pluck('year')
-    //         ->mapWithKeys(fn($year) => [$year => $year])
-    //         ->toArray();
-    // }
+    protected function getFilters(): ?array
+    {
+        return DB::table('media')
+            ->selectRaw('YEAR(created_at) as year')
+            ->distinct()
+            ->pluck('year')
+            ->mapWithKeys(fn($year) => [$year => $year])
+            ->toArray();
+    }
 
     protected function getData(): array
     {
+        $activeFilter = $this->filter ?? date('Y');
+
         return [
             'datasets' => [
                 [
                     'label' => 'PDF',
-                    'data' => $this->getFileDataByType('file-pdf'),
+                    'data' => $this->getFileDataByType('file-pdf', $activeFilter),
                     'pointStyle' => 'circle',
                     'pointRadius' => 5,
                     'pointHoverRadius' => 8,
@@ -61,7 +64,7 @@ class FileUploadChart extends ChartWidget
                 ],
                 [
                     'label' => 'Word',
-                    'data' => $this->getFileDataByType('file-word'),
+                    'data' => $this->getFileDataByType('file-word', $activeFilter),
                     'pointStyle' => 'circle',
                     'pointRadius' => 5,
                     'pointHoverRadius' => 8,
@@ -75,7 +78,7 @@ class FileUploadChart extends ChartWidget
                 ],
                 [
                     'label' => 'Excel',
-                    'data' => $this->getFileDataByType('file-excel'),
+                    'data' => $this->getFileDataByType('file-excel', $activeFilter),
                     'pointStyle' => 'circle',
                     'pointRadius' => 5,
                     'pointHoverRadius' => 8,
@@ -89,7 +92,7 @@ class FileUploadChart extends ChartWidget
                 ],
                 [
                     'label' => 'PPT',
-                    'data' => $this->getFileDataByType('file-ppt'),
+                    'data' => $this->getFileDataByType('file-ppt', $activeFilter),
                     'pointStyle' => 'circle',
                     'pointRadius' => 5,
                     'pointHoverRadius' => 8,
@@ -103,7 +106,7 @@ class FileUploadChart extends ChartWidget
                 ],
                 [
                     'label' => 'Image',
-                    'data' => $this->getFileDataByType('file-image'),
+                    'data' => $this->getFileDataByType('file-image', $activeFilter),
                     'pointStyle' => 'circle',
                     'pointRadius' => 5,
                     'pointHoverRadius' => 8,
