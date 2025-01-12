@@ -22,8 +22,8 @@ export default function Beranda({ vision, mission }: TBerandaProps) {
 
         {/* Cards */}
         <div className="relative z-10 flex w-full flex-col gap-10">
-          <VisiMisiCard text={vision.content} />
-          <VisiMisiCard text={mission.content} />
+          <VisiMisiCard text={vision?.content} />
+          <VisiMisiCard text={mission?.content} />
         </div>
       </section>
     </>
