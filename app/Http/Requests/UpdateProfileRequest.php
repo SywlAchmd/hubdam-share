@@ -30,7 +30,7 @@ class UpdateProfileRequest extends FormRequest
 		];
 
 		if ($this->hasFile('image')) {
-			$rules['image'] = 'file|mimes:jpg,png,jpeg|max:2048';
+			$rules['image'] = 'image|mimes:jpeg,png,jpg|max:2048';
 		}
 	}
 

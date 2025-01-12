@@ -17,6 +17,7 @@ export default function FormInput({
   placeholder,
   disabled = false,
   type = "text",
+  ...props
 }: FormInputProps) {
   return (
     <section>
@@ -28,6 +29,7 @@ export default function FormInput({
         placeholder={placeholder}
         type={type}
         disabled={disabled}
+        {...props}
         className="w-full rounded-lg border-2 border-solid border-light-gray focus:border-forest-green focus:ring-forest-green disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none"
       />
       <InputError message={error} className="mt-1" />

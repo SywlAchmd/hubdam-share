@@ -1,5 +1,6 @@
 import InputError from "@/components/atoms/InputError";
 import PrimaryButton from "@/components/atoms/PrimaryButton";
+import { CropperModal } from "@/components/molecules/CropperModal";
 import FormInput from "@/components/molecules/FormInput";
 import { Head, useForm, usePage } from "@inertiajs/react";
 import { FormEventHandler, useEffect, useState } from "react";
@@ -12,11 +13,8 @@ export default function Profile() {
     auth.user?.image ? `${baseUrl}/storage/${auth.user.image}` : "/assets/images/default_avatar.jpg",
   );
 
-  useEffect(() => {
-    return () => {
-      if (preview) URL.revokeObjectURL(preview);
-    };
-  }, [preview]);
+  const [isCropperOpen, setIsCropperOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     if (flash.success) {
@@ -33,11 +31,13 @@ export default function Profile() {
     email: auth.user?.email ?? "",
     staff: auth.user?.staff ?? "",
     image: auth.user?.image ?? null,
+    originalFileName: "",
+    originalFileExtension: "",
     password: "",
     password_confirmation: "",
   });
 
-  const handleSubmit: FormEventHandler = (e) => {
+  const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
 
     post(route("profile.update"), {
@@ -64,102 +64,143 @@ export default function Profile() {
         return;
       }
 
-      setData("image", file);
-      const previewUrl = URL.createObjectURL(file);
-      setPreview(previewUrl);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedImage(reader.result as string);
+        setIsCropperOpen(true);
+
+        const fileNameParts = file.name.split(".");
+
+        const fileNameWithoutExtension = fileNameParts.slice(0, -1).join(".") || "image";
+        const fileExtension = fileNameParts.pop() || "jpg";
+
+        setData("originalFileName", fileNameWithoutExtension);
+        setData("originalFileExtension", fileExtension);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
+  const handleImageCrop = (croppedImage: string) => {
+    setPreview(croppedImage);
+
+    fetch(croppedImage)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const originalFileName = data.originalFileName || "image";
+        const originalFileExtension = data.originalFileExtension || "jpg";
+        const fileName = `${originalFileName}.${originalFileExtension}`;
+
+        const file = new File([blob], fileName, { type: `image/${originalFileExtension}` });
+        setData("image", file);
+      });
+  };
+
   return (
-    <section className="single-section-padding flex min-h-screen gap-10">
-      <Head title="Profile" />
+    <>
+      <section className="single-section-padding flex min-h-screen gap-10">
+        <Head title="Profile" />
 
-      {/* Profile picture */}
-      <section className="section-bg w-1/4 overflow-hidden">
-        <section className="bg-slate-200 p-3 font-medium text-olive-gray">Foto Profil</section>
-        <section className="flex flex-col items-center gap-4 p-10 text-xs">
-          <img
-            src={preview}
-            alt="user_image"
-            className="aspect-square w-32 cursor-pointer overflow-hidden rounded-full"
-          />
-
-          <p>File tidak boleh lebih dari 2 MB</p>
-          <input id="image-upload" type="file" className="hidden" onChange={handleImageChange} />
-
-          <InputError message={errors?.image} />
-        </section>
-
-        <section className="flex w-full justify-center pb-8">
-          <PrimaryButton className="text-sm" onClick={() => document.getElementById("image-upload")?.click()}>
-            Upload gambar
-          </PrimaryButton>
-        </section>
-      </section>
-
-      {/* Account details */}
-      <section className="section-bg w-3/4 overflow-hidden">
-        <section className="bg-slate-200 p-3 font-medium text-olive-gray">Detail Akun</section>
-
-        <form className="flex flex-col gap-4 p-5" onSubmit={handleSubmit}>
-          <FormInput
-            label="Name"
-            value={data.name}
-            onChange={(e) => setData("name", e.target.value)}
-            error={errors?.name}
-            placeholder="Masukan nama anda"
-          />
-
-          <FormInput
-            label="Username"
-            value={data.username}
-            onChange={(e) => setData("username", e.target.value)}
-            error={errors?.username}
-            placeholder="Masukan username anda"
-          />
-
-          <FormInput
-            label="Email"
-            value={data.email}
-            onChange={(e) => setData("email", e.target.value)}
-            error={errors?.email}
-            placeholder="Masukan email anda"
-          />
-
-          <FormInput
-            label="Staff"
-            value={data.staff}
-            onChange={(e) => setData("staff", e.target.value)}
-            error={errors?.staff}
-            disabled
-          />
-
-          <FormInput
-            label="Password"
-            value={data.password}
-            onChange={(e) => setData("password", e.target.value)}
-            error={errors?.password}
-            placeholder="Masukkan password baru"
-            type="password"
-          />
-
-          {data.password && (
-            <FormInput
-              label="Confirm Password"
-              value={data.password_confirmation}
-              onChange={(e) => setData("password_confirmation", e.target.value)}
-              placeholder="Konfirmasi password"
-              type="password"
+        {/* Profile picture */}
+        <section className="section-bg w-1/4 overflow-hidden">
+          <section className="bg-slate-200 p-3 font-medium text-olive-gray">Foto Profil</section>
+          <section className="flex flex-col items-center gap-4 p-10 text-xs">
+            <img
+              src={preview}
+              alt="user_image"
+              className="aspect-square w-32 cursor-pointer overflow-hidden rounded-full"
             />
-          )}
 
-          <section className="flex justify-end">
-            <PrimaryButton className="text-sm" disabled={processing}>
-              Simpan
+            <p>File tidak boleh lebih dari 2 MB</p>
+            <input
+              id="image-upload"
+              type="file"
+              className="hidden"
+              accept="image/png, image/jpg, image/jpeg"
+              onChange={handleImageChange}
+            />
+
+            <InputError message={errors?.image} />
+          </section>
+
+          <section className="flex w-full justify-center pb-8">
+            <PrimaryButton className="text-sm" onClick={() => document.getElementById("image-upload")?.click()}>
+              Upload gambar
             </PrimaryButton>
           </section>
-        </form>
+        </section>
+
+        {/* Account details */}
+        <section className="section-bg w-3/4 overflow-hidden">
+          <section className="bg-slate-200 p-3 font-medium text-olive-gray">Detail Akun</section>
+
+          <form className="flex flex-col gap-4 p-5" onSubmit={handleSubmit}>
+            <FormInput
+              label="Name"
+              value={data.name}
+              onChange={(e) => setData("name", e.target.value)}
+              error={errors?.name}
+              placeholder="Masukan nama anda"
+            />
+
+            <FormInput
+              label="Username"
+              value={data.username}
+              onChange={(e) => setData("username", e.target.value)}
+              error={errors?.username}
+              placeholder="Masukan username anda"
+            />
+
+            <FormInput
+              label="Email"
+              value={data.email}
+              onChange={(e) => setData("email", e.target.value)}
+              error={errors?.email}
+              placeholder="Masukan email anda"
+            />
+
+            <FormInput
+              label="Staff"
+              value={data.staff}
+              onChange={(e) => setData("staff", e.target.value)}
+              error={errors?.staff}
+              disabled
+            />
+
+            <FormInput
+              label="Password"
+              value={data.password}
+              onChange={(e) => setData("password", e.target.value)}
+              error={errors?.password}
+              placeholder="Masukkan password baru"
+              type="password"
+            />
+
+            {data.password && (
+              <FormInput
+                label="Confirm Password"
+                value={data.password_confirmation}
+                onChange={(e) => setData("password_confirmation", e.target.value)}
+                placeholder="Konfirmasi password"
+                type="password"
+              />
+            )}
+
+            <section className="flex justify-end">
+              <PrimaryButton className="text-sm" disabled={processing}>
+                Simpan
+              </PrimaryButton>
+            </section>
+          </form>
+        </section>
       </section>
-    </section>
+
+      <CropperModal
+        imageSrc={selectedImage ?? ""}
+        isOpen={isCropperOpen}
+        onClose={() => setIsCropperOpen(false)}
+        onCropComplete={handleImageCrop}
+      />
+    </>
   );
 }
