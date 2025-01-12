@@ -44,9 +44,13 @@ class FileHelper
     if ($files->count() == 1) {
       $file = $files->first();
 
+      $filePath = $file->getPath();
+      $fileExtension = (explode('.', $file->file_name)[1]);
+      $fileName = "{$file->name}.{$fileExtension}";
+
       return response()->download(
-        $file->getPath(),
-        $file->name . '.' . explode('.', $file->file_name)[1]
+        $filePath,
+        $fileName
       );
     }
 
@@ -68,5 +72,26 @@ class FileHelper
     }
 
     return response()->download($zipPath)->deleteFileAfterSend(true);
+  }
+
+  /**
+   * Get staff options for the Select component.
+   * @return array
+   */
+  public static function getStaffOptions(): array
+  {
+    return [
+      'pers' => 'Staf Tuud/Pers',
+      'sikomlek' => 'Staf Sikomlek',
+      'pernika' => 'Staf Pernika',
+      'konbekharstal' => 'Staf Konbekharstal',
+      'benghubdam' => 'Staf Benghubdam',
+      'gudmathub' => 'Staf Gudmathub',
+      'urlog' => 'Staf Urlog',
+      'urlat' => 'Staf Urlat',
+      'urpam' => 'Staf Urpam',
+      'renproggar' => 'Staf Renproggar',
+      'denhubdam' => 'Staf Denhubdam'
+    ];
   }
 }

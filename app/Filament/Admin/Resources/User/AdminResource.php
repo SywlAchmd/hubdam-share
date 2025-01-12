@@ -4,6 +4,7 @@ namespace App\Filament\Admin\Resources\User;
 
 use App\Filament\Admin\Resources\User\AdminResource\Pages;
 use App\Filament\Admin\Resources\AdminResource\RelationManagers;
+use App\Helpers\FileHelper;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -70,19 +71,7 @@ class AdminResource extends Resource
                             ->native(false)
                             ->required(),
                         Forms\Components\Select::make('staff')
-                            ->options([
-                                'pers' => 'Staf Tuud/Pers',
-                                'sikomlek' => 'Sikomlek',
-                                'pernika' => 'Staf Pernika',
-                                'konbekharstal' => 'Konbekharstal',
-                                'benghubdam' => 'Benghubdam',
-                                'gudmathub' => 'Gudmathub',
-                                'urlog' => 'Urlog',
-                                'urlat' => 'Urlat',
-                                'urpam' => 'Urpam',
-                                'renproggar' => 'Renproggar',
-                                'denhubdam' => 'Denhubdam'
-                            ])
+                            ->options(FileHelper::getStaffOptions())
                             ->native(false)
                     ])
                     ->columns(2),
@@ -123,18 +112,9 @@ class AdminResource extends Resource
                     }),
                 Tables\Columns\TextColumn::make('staff')
                     ->searchable()
-                    ->formatStateUsing(fn($state) => match ($state) {
-                        'pers' => 'Staf Tuud/Pers',
-                        'sikomlek' => 'Sikomlek',
-                        'pernika' => 'Staf Pernika',
-                        'konbekharstal' => 'Konbekharstal',
-                        'benghubdam' => 'Benghubdam',
-                        'gudmathub' => 'Gudmathub',
-                        'urlog' => 'Urlog',
-                        'urlat' => 'Urlat',
-                        'urpam' => 'Urpam',
-                        'renproggar' => 'Renproggar',
-                        'denhubdam' => 'Denhubdam'
+                    ->formatStateUsing(function ($state) {
+                        $options = FileHelper::getStaffOptions();
+                        return $options[$state] ?? $state;
                     })
             ])
             ->modifyQueryUsing(fn(Builder $query) => $query->where('role', '!=', '2'))
@@ -144,24 +124,12 @@ class AdminResource extends Resource
                     ->options([
                         '0' => 'Superadmin',
                         '1' => 'Admin',
-                        '2' => 'Staff',
                     ])
                     ->label('Role'),
                 Tables\Filters\SelectFilter::make('staff')
                     ->native(false)
-                    ->options([
-                        'pers' => 'Staf Tuud/Pers',
-                        'sikomlek' => 'Sikomlek',
-                        'pernika' => 'Staf Pernika',
-                        'konbekharstal' => 'Konbekharstal',
-                        'benghubdam' => 'Benghubdam',
-                        'gudmathub' => 'Gudmathub',
-                        'urlog' => 'Urlog',
-                        'urlat' => 'Urlat',
-                        'urpam' => 'Urpam',
-                        'renproggar' => 'Renproggar',
-                        'denhubdam' => 'Denhubdam'
-                    ])
+                    ->searchable()
+                    ->options(FileHelper::getStaffOptions())
                     ->label('Staf')
             ])
             ->actions([

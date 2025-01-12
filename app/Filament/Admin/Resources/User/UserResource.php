@@ -4,6 +4,7 @@ namespace App\Filament\Admin\Resources\User;
 
 use App\Filament\Admin\Resources\User\UserResource\Pages;
 use App\Filament\Admin\Resources\UserResource\RelationManagers;
+use App\Helpers\FileHelper;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -54,21 +55,10 @@ class UserResource extends Resource
                             ->required(fn(string $context): bool => $context === 'create'),
                         Forms\Components\Select::make('staff')
                             ->searchable()
-                            ->options([
-                                'pers' => 'Staf Tuud/Pers',
-                                'sikomlek' => 'Sikomlek',
-                                'pernika' => 'Staf Pernika',
-                                'konbekharstal' => 'Konbekharstal',
-                                'benghubdam' => 'Benghubdam',
-                                'gudmathub' => 'Gudmathub',
-                                'urlog' => 'Urlog',
-                                'urlat' => 'Urlat',
-                                'urpam' => 'Urpam',
-                                'renproggar' => 'Renproggar',
-                                'denhubdam' => 'Denhubdam'
-                            ])
+                            ->options(FileHelper::getStaffOptions())
                             ->default(fn() => auth()->user()->staff ?? null)
                             ->disabled(auth()->user()->role != 0)
+                            ->dehydrated()
                             ->columnSpanFull()
                             ->native(false)
                     ])
@@ -109,18 +99,9 @@ class UserResource extends Resource
                     }),
                 Tables\Columns\TextColumn::make('staff')
                     ->searchable()
-                    ->formatStateUsing(fn($state) => match ($state) {
-                        'pers' => 'Staf Tuud/Pers',
-                        'sikomlek' => 'Sikomlek',
-                        'pernika' => 'Staf Pernika',
-                        'konbekharstal' => 'Konbekharstal',
-                        'benghubdam' => 'Benghubdam',
-                        'gudmathub' => 'Gudmathub',
-                        'urlog' => 'Urlog',
-                        'urlat' => 'Urlat',
-                        'urpam' => 'Urpam',
-                        'renproggar' => 'Renproggar',
-                        'denhubdam' => 'Denhubdam'
+                    ->formatStateUsing(function ($state) {
+                        $options = FileHelper::getStaffOptions();
+                        return $options[$state] ?? $state;
                     })
             ])
             ->modifyQueryUsing(fn(Builder $query) => $query->where('role', '!=', '0'))
@@ -134,19 +115,8 @@ class UserResource extends Resource
                     ->label('Role'),
                 Tables\Filters\SelectFilter::make('staff')
                     ->native(false)
-                    ->options([
-                        'pers' => 'Staf Tuud/Pers',
-                        'sikomlek' => 'Sikomlek',
-                        'pernika' => 'Staf Pernika',
-                        'konbekharstal' => 'Konbekharstal',
-                        'benghubdam' => 'Benghubdam',
-                        'gudmathub' => 'Gudmathub',
-                        'urlog' => 'Urlog',
-                        'urlat' => 'Urlat',
-                        'urpam' => 'Urpam',
-                        'renproggar' => 'Renproggar',
-                        'denhubdam' => 'Denhubdam'
-                    ])
+                    ->searchable()
+                    ->options(FileHelper::getStaffOptions())
                     ->label('Staf')
             ])
             ->actions([
