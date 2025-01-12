@@ -205,6 +205,10 @@ body {
 /* ------------------------------------------ */
 
 @layer utilities {
+  .page-title {
+    @apply text-2xl font-bold text-gray-800 md:text-3xl;
+  }
+
   .text-balance {
     text-wrap: balance;
   }
