@@ -1,4 +1,5 @@
 import { User } from "@/types";
+import { getStaffDisplayName } from "@/utils/staffOptions";
 
 export default function CardName({ name, staff, image }: User) {
   return (
@@ -11,7 +12,7 @@ export default function CardName({ name, staff, image }: User) {
 
       <section className="py-4 text-center text-lg sm:text-xs mdlg:text-base">
         <p className="font-semibold text-forest-green">{name}</p>
-        <p>{staff}</p>
+        <p>{getStaffDisplayName(staff ?? "")}</p>
       </section>
     </section>
   );

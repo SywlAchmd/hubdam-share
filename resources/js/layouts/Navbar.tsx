@@ -6,7 +6,9 @@ import { FaChevronDown } from "react-icons/fa";
 import { RiUserSettingsLine, RiLogoutBoxRLine } from "react-icons/ri";
 
 export default function Navbar() {
-  const { appName } = usePage().props;
+  const { appName, auth } = usePage().props;
+
+  const baseUrl = window.location.origin;
   const currentPathname = window.location.pathname;
   const [navLinks, setNavLinks] = useState(navLinksId.map((item) => item));
   const [isDropdownOpened, setIsDropdownOpened] = useState(false);
@@ -126,7 +128,7 @@ export default function Navbar() {
           {/* profile */}
           <section>
             <img
-              src="/assets/images/default_avatar.jpg"
+              src={`${auth.user.image ? `${baseUrl}/storage/${auth.user.image}` : "/assets/images/default_avatar.jpg"}`}
               alt="user_image"
               className="aspect-square w-12 cursor-pointer overflow-hidden rounded-full"
               onClick={handleProfileClick}
