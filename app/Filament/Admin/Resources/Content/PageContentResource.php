@@ -25,11 +25,24 @@ class PageContentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\MarkdownEditor::make('content')
-                    ->label(fn($record) => match ($record->type) {
+                Forms\Components\Select::make('type')
+                    ->options([
                         'vision' => 'Visi',
-                        'mission' => 'Misi'
-                    })
+                        'mission' => 'Misi',
+                    ])
+                    ->native(false)
+                    ->required()
+                    ->columnSpanFull()
+                    ->reactive()
+                    ->disabled(fn($record) => $record !== null)
+                    ->hidden(fn($record) => $record !== null),
+
+                Forms\Components\MarkdownEditor::make('content')
+                    ->label(fn($record) => $record ? match ($record->type) {
+                        'vision' => 'Visi',
+                        'mission' => 'Misi',
+                        default => 'Content',
+                    } : 'Content')
                     ->required()
                     ->toolbarButtons([
                         'blockquote',
@@ -42,9 +55,11 @@ class PageContentResource extends Resource
                         'redo',
                         'undo',
                     ])
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
             ]);
     }
+
+
 
     public static function table(Table $table): Table
     {
