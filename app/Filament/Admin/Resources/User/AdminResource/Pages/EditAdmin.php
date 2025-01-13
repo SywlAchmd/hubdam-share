@@ -22,8 +22,8 @@ class EditAdmin extends EditRecord
 
     protected function getHeaderActions(): array
     {
-        return [
-            Actions\DeleteAction::make(),
-        ];
+        return auth()->user()->id === $this->record->id
+        ? []
+        : [Actions\DeleteAction::make()];
     }
 }

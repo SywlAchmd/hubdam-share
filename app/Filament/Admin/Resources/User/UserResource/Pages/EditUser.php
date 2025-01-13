@@ -17,8 +17,13 @@ class EditUser extends EditRecord
 
     protected function getHeaderActions(): array
     {
-        return [
-            Actions\DeleteAction::make(),
-        ];
+        if (
+            auth()->user()->id === $this->record->id || 
+            in_array($this->record->role, [0, 1])
+        ) {
+            return [];
+        }
+    
+        return [Actions\DeleteAction::make()];
     }
 }

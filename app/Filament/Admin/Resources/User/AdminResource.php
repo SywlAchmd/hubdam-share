@@ -54,6 +54,7 @@ class AdminResource extends Resource
                             ->required()
                             ->unique(ignoreRecord: true),
                         Forms\Components\TextInput::make('email')
+                            ->required()
                             ->email()
                             ->unique(ignoreRecord: true),
                         Forms\Components\TextInput::make('password')
@@ -71,6 +72,7 @@ class AdminResource extends Resource
                             ->native(false)
                             ->required(),
                         Forms\Components\Select::make('staff')
+                            ->searchable()
                             ->options(FileHelper::getStaffOptions())
                             ->native(false)
                     ])
