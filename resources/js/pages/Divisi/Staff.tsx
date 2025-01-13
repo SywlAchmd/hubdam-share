@@ -50,6 +50,7 @@ export default function Staff({ staff, type }: TStaffProps) {
                 href={link.url ? link.url : ""}
                 key={`pagination-link-${index}`}
                 className={`btn join-item btn-sm ${link.active ? "btn-active" : ""} ${!link.url ? "btn-disabled" : ""}`}
+                preserveScroll
                 dangerouslySetInnerHTML={{ __html: link.label }}
                 disabled={!link.url}
               ></Link>

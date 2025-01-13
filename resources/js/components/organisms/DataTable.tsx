@@ -39,7 +39,7 @@ export default function DataTable({
     <div className="space-y-3 rounded-lg bg-white p-4 shadow">
       <div className="flex flex-col gap-3 md:flex-row md:items-center">
         <section className="flex items-center justify-between">
-          <p className="font-semibold lg:w-2/3">{title}</p>
+          <p className="font-semibold text-black lg:w-2/3">{title}</p>
 
           {filterable && (
             <Field>
@@ -72,7 +72,7 @@ export default function DataTable({
           <thead>
             <tr>
               {columns.map((column) => (
-                <th key={column.dataIndex} className="relative align-middle">
+                <th key={column.dataIndex} className="relative align-middle text-black">
                   {column.title}
                 </th>
               ))}
@@ -89,7 +89,7 @@ export default function DataTable({
               dataSource.map((data, index) => (
                 <tr key={`data-table-row-${index}`}>
                   {columns.map((column) => (
-                    <td key={column.dataIndex}>
+                    <td key={column.dataIndex} className="text-black">
                       {column.render ? (
                         column.render(data[column.dataIndex], index, data)
                       ) : (
@@ -115,6 +115,7 @@ export default function DataTable({
               href={link.url ? link.url : ""}
               key={`pagination-link-${index}`}
               className={`btn join-item btn-sm ${link.active ? "btn-active" : ""} ${!link.url ? "btn-disabled" : ""}`}
+              preserveScroll
               dangerouslySetInnerHTML={{ __html: link.label }}
               disabled={!link.url}
             ></Link>

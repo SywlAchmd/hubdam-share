@@ -27,7 +27,7 @@ export default function InputSearch({ value, onChange, onSearch, onReset }: Inpu
         Search
       </button>
 
-      <button className="btn btn-sm border-forest-green text-forest-green" onClick={onReset}>
+      <button className="btn btn-outline btn-sm border-forest-green text-forest-green" onClick={onReset}>
         Reset
       </button>
     </section>

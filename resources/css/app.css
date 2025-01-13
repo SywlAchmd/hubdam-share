@@ -27,7 +27,7 @@
   }
 
   .section-title {
-    @apply border-l-8 border-solid border-forest-green px-4 text-3xl font-bold sm:border-l-4 sm:text-2xl;
+    @apply border-l-8 border-solid border-forest-green px-4 text-3xl font-bold sm:border-l-4 sm:text-2xl text-black;
   }
 
   .section-bg {

@@ -90,9 +90,9 @@ export default function UploadFileModal({ isOpen, onClose }: UploadFileModalProp
 
   return (
     <dialog className="modal modal-open px-2">
-      <div className="modal-box">
+      <div className="modal-box bg-white">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <section className="flex items-center justify-between">
+          <section className="flex items-center justify-between text-black">
             <h3 className="text-lg font-bold">Upload File</h3>
             <HiOutlineX size={25} className="cursor-pointer" onClick={onClose} />
           </section>

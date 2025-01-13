@@ -141,6 +141,7 @@ export default function Profile() {
               onChange={(e) => setData("name", e.target.value)}
               error={errors?.name}
               placeholder="Masukan nama anda"
+              required
             />
 
             <FormInput
@@ -149,6 +150,7 @@ export default function Profile() {
               onChange={(e) => setData("username", e.target.value)}
               error={errors?.username}
               placeholder="Masukan username anda"
+              required
             />
 
             <FormInput
@@ -157,6 +159,7 @@ export default function Profile() {
               onChange={(e) => setData("email", e.target.value)}
               error={errors?.email}
               placeholder="Masukan email anda"
+              required
             />
 
             <FormInput
@@ -164,6 +167,7 @@ export default function Profile() {
               value={data.staff}
               onChange={(e) => setData("staff", e.target.value)}
               error={errors?.staff}
+              required
               disabled
             />
 
