@@ -22,23 +22,28 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'phosphor-user';
 
-    protected static ?string $navigationLabel = 'User';
+    protected static ?string $navigationLabel = 'Pengguna';
 
-    protected static ?string $navigationGroup = 'User';
+    protected static ?string $navigationGroup = 'Pengguna';
 
     protected static ?int $navigationSort = 2;
 
     protected static ?string $slug = 'users';
+
+    protected static ?string $breadcrumb = "Pengguna";
+
+    protected static ?string $pluralLabel = "Pengguna";
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Section::make()
-                    ->heading('User Data')
+                    ->heading('Data Pengguna')
                     ->description('Masukan informasi pengguna di sini')
                     ->schema([
                         Forms\Components\TextInput::make('name')
+                            ->label("Nama")
                             ->required(),
                         Forms\Components\TextInput::make('username')
                             ->required()
@@ -68,6 +73,7 @@ class UserResource extends Resource
                     ->description('Upload foto pengguna di sini')
                     ->schema([
                         Forms\Components\FileUpload::make('image')
+                            ->label("Gambar")
                             ->image()
                             ->acceptedFileTypes(['image/*'])
                             ->imageEditor()
@@ -83,6 +89,7 @@ class UserResource extends Resource
             ->defaultSort('role', 'asc')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label("Nama")
                     ->icon(fn(User $record) => $record->image ? Storage::disk('public')->url($record->image) : asset('assets/images/default_avatar.jpg'))
                     ->size(Tables\Columns\TextColumn\TextColumnSize::Medium)
                     ->weight(\Filament\Support\Enums\FontWeight::Medium)

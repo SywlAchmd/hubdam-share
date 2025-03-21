@@ -10,6 +10,8 @@ class CreateImage extends CreateRecord
 {
     protected static string $resource = ImageResource::class;
 
+    protected static ?string $title = 'Buat Dokumen';
+
     protected function getRedirectUrl(): string
     {
         return static::getResource()::getUrl('index');

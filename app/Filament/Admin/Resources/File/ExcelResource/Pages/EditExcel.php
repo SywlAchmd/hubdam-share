@@ -9,6 +9,8 @@ use Filament\Resources\Pages\EditRecord;
 class EditExcel extends EditRecord
 {
     protected static string $resource = ExcelResource::class;
+    
+    protected static ?string $title = 'Edit Dokumen';
 
     protected function getRedirectUrl(): string
     {

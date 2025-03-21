@@ -24,7 +24,7 @@ class AdminResource extends Resource
 
     protected static ?string $navigationLabel = 'Admin';
 
-    protected static ?string $navigationGroup = 'User';
+    protected static ?string $navigationGroup = 'Pengguna';
 
     protected static ?int $navigationSort = 1;
 
@@ -45,10 +45,11 @@ class AdminResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Section::make()
-                    ->heading('Admin Data')
+                    ->heading('Data Admin')
                     ->description('Masukan informasi admin di sini')
                     ->schema([
                         Forms\Components\TextInput::make('name')
+                            ->label("Nama")
                             ->required(),
                         Forms\Components\TextInput::make('username')
                             ->required()
@@ -82,6 +83,7 @@ class AdminResource extends Resource
                     ->description('Upload foto di sini')
                     ->schema([
                         Forms\Components\FileUpload::make('image')
+                            ->label("Gambar")
                             ->image()
                             ->acceptedFileTypes(['image/*'])
                             ->imageEditor()
@@ -97,6 +99,7 @@ class AdminResource extends Resource
             ->defaultSort('role', 'asc')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label("Nama")
                     ->icon(fn(User $record) => $record->image ? Storage::disk('public')->url($record->image) : asset('assets/images/default_avatar.jpg'))
                     ->size(Tables\Columns\TextColumn\TextColumnSize::Medium)
                     ->weight(\Filament\Support\Enums\FontWeight::Medium)

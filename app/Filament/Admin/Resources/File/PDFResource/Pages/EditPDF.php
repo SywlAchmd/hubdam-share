@@ -10,6 +10,8 @@ class EditPDF extends EditRecord
 {
     protected static string $resource = PDFResource::class;
 
+    protected static ?string $title = 'Ubah Dokumen';
+
     protected function getRedirectUrl(): string
     {
         return static::getResource()::getUrl('index');

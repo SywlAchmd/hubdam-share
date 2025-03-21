@@ -23,7 +23,7 @@ class WordResource extends Resource
 
     protected static ?string $navigationLabel = 'Word';
 
-    protected static ?string $navigationGroup = 'Files';
+    protected static ?string $navigationGroup = 'Dokumen';
 
     protected static ?int $navigationSort = 2;
 
@@ -41,7 +41,7 @@ class WordResource extends Resource
                 Forms\Components\Hidden::make('user_id')
                     ->default(auth()->user()->id),
                 Forms\Components\SpatieMediaLibraryFileUpload::make('File Upload')
-                    ->label('Upload File')
+                    ->label('Unggah Dokumen')
                     ->acceptedFileTypes([
                         'application/msword',
                         'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
@@ -66,6 +66,7 @@ class WordResource extends Resource
                     ->label('Email')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('Files')
+                    ->label("Dokumen")
                     ->getStateUsing(function ($record) {
                         $files = $record->getMedia('file-word');
 
@@ -88,6 +89,7 @@ class WordResource extends Resource
                     ->label('Waktu')
                     ->formatStateUsing(fn($state) => $state->format('d M Y, H:i')),
                 Tables\Columns\TextColumn::make('Size')
+                    ->label("Ukuran Dokumen")
                     ->label('Size Files')
                     ->getStateUsing(function ($record) {
                         $files = $record->getMedia('file-word');

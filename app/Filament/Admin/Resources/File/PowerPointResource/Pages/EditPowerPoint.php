@@ -10,6 +10,8 @@ class EditPowerPoint extends EditRecord
 {
     protected static string $resource = PowerPointResource::class;
 
+    protected static ?string $title = 'Edit Dokumen';
+
     protected function getRedirectUrl(): string
     {
         return static::getResource()::getUrl('index');

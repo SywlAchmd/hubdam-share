@@ -22,7 +22,7 @@ class PDFResource extends Resource
 
     protected static ?string $navigationLabel = 'PDF';
 
-    protected static ?string $navigationGroup = 'Files';
+    protected static ?string $navigationGroup = 'Dokumen';
 
     protected static ?int $navigationSort = 1;
 
@@ -40,7 +40,7 @@ class PDFResource extends Resource
                 Forms\Components\Hidden::make('user_id')
                     ->default(auth()->user()->id),
                 Forms\Components\SpatieMediaLibraryFileUpload::make('File Upload')
-                    ->label('Upload File')
+                    ->label('Unggah Dokumen')
                     ->acceptedFileTypes(['application/pdf'])
                     ->collection('file-pdf')
                     ->multiple()
@@ -62,6 +62,7 @@ class PDFResource extends Resource
                     ->label('Email')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('Files')
+                    ->label("Dokumen")
                     ->getStateUsing(function ($record) {
                         $files = $record->getMedia('file-pdf');
 
@@ -84,7 +85,7 @@ class PDFResource extends Resource
                     ->label('Waktu')
                     ->formatStateUsing(fn($state) => $state->format('d M Y, H:i')),
                 Tables\Columns\TextColumn::make('Size')
-                    ->label('Size Files')
+                    ->label('Ukuran Dokumen')
                     ->getStateUsing(function ($record) {
                         $files = $record->getMedia('file-pdf');
 

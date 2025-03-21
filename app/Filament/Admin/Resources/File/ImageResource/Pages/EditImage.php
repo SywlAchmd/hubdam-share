@@ -10,6 +10,8 @@ class EditImage extends EditRecord
 {
     protected static string $resource = ImageResource::class;
 
+    protected static ?string $title = 'Ubah Dokumen';
+
     protected function getRedirectUrl(): string
     {
         return static::getResource()::getUrl('index');
