@@ -21,11 +21,16 @@ class PageContentResource extends Resource
 
     protected static ?string $slug = 'page-content';
 
+    protected static ?string $breadcrumb = "Konten Halaman";
+
+    protected static ?string $pluralLabel = "Konten Halaman";
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('type')
+                    ->label("Tipe")
                     ->options([
                         'vision' => 'Visi',
                         'mission' => 'Misi',
@@ -41,8 +46,8 @@ class PageContentResource extends Resource
                     ->label(fn($record) => $record ? match ($record->type) {
                         'vision' => 'Visi',
                         'mission' => 'Misi',
-                        default => 'Content',
-                    } : 'Content')
+                        default => 'Konten',
+                    } : 'Konten')
                     ->required()
                     ->toolbarButtons([
                         'blockquote',
@@ -70,7 +75,7 @@ class PageContentResource extends Resource
             })
             ->paginated(false)
             ->columns([
-                Tables\Columns\TextColumn::make('content')->wrap(),
+                Tables\Columns\TextColumn::make('content')->label("Konten")->wrap(),
             ])
             ->filters([
                 //

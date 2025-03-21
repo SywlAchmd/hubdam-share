@@ -20,18 +20,17 @@ class ImageResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-photo';
 
-    protected static ?string $navigationLabel = 'Images';
+    protected static ?string $navigationLabel = 'Gambar';
 
-    protected static ?string $navigationGroup = 'Files';
+    protected static ?string $navigationGroup = 'Dokumen';
 
     protected static ?int $navigationSort = 5;
 
     protected static ?string $slug = 'images';
 
-    public static function getPluralLabel(): ?string
-    {
-        return ('Images');
-    }
+    protected static ?string $pluralLabel = "Gambar";
+
+    protected static ?string $breadcrumb = "Gambar";
 
     public static function form(Form $form): Form
     {
@@ -40,7 +39,7 @@ class ImageResource extends Resource
                 Forms\Components\Hidden::make('user_id')
                     ->default(auth()->user()->id),
                 Forms\Components\SpatieMediaLibraryFileUpload::make('File Upload')
-                    ->label('Upload File')
+                    ->label('Unggah Dokumen')
                     ->image()
                     ->acceptedFileTypes(['image/*'])
                     ->imageEditor()
@@ -63,7 +62,7 @@ class ImageResource extends Resource
                 Tables\Columns\TextColumn::make('user.email')
                     ->label('Email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('Files')
+                Tables\Columns\TextColumn::make('Dokumen')
                     ->getStateUsing(function ($record) {
                         $files = $record->getMedia('file-image');
 
@@ -86,7 +85,7 @@ class ImageResource extends Resource
                     ->label('Waktu')
                     ->formatStateUsing(fn($state) => $state->format('d M Y, H:i')),
                 Tables\Columns\TextColumn::make('Size')
-                    ->label('Size Files')
+                    ->label('Ukuran Dokumen')
                     ->getStateUsing(function ($record) {
                         $files = $record->getMedia('file-image');
 

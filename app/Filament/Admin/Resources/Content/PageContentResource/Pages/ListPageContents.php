@@ -27,7 +27,7 @@ class ListPageContents extends ListRecords
 
         if (!$visiExist || !$misiExist) {
             return [
-                Actions\CreateAction::make(),
+                Actions\CreateAction::make()->modalHeading("Buat Konten Halaman"),
             ];
         }
 

@@ -26,8 +26,8 @@ class AppServiceProvider extends ServiceProvider
 
         Filament::serving(function () {
             Filament::registerNavigationGroups([
-                'User',
-                'Files'
+                'Pengguna',
+                'Dokumen'
             ]);
         });
     }
