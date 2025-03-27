@@ -63,9 +63,10 @@ class ExcelResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Nama')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('user.email')
-                    ->label('Email')
-                    ->searchable(),
+	        Tables\Columns\TextColumn::make('user.staff')
+                    ->label('Staff')
+                    ->searchable()
+                    ->formatStateUsing(fn ($state) => FileHelper::getStaffOptions()[$state]),
                 Tables\Columns\TextColumn::make('Files')
                     ->label("Dokumen")
                     ->getStateUsing(function ($record) {
@@ -102,8 +103,35 @@ class ExcelResource extends Resource
                     $query->where('collection_name', 'file-excel');
                 });
             })
-            ->filters([
-                //
+	    ->filters([
+                Tables\Filters\Filter::make('staff')->form([
+                    Forms\Components\Select::make('staff')
+                        ->label('Staff')
+                        ->options(FileHelper::getStaffOptions())
+                        ->searchable()
+                        ->preload()
+                        ->native(false)
+                ])
+                ->query(function (Builder $query, array $data): Builder {
+                    $staff = $data['staff'] ?? null;
+
+                    if (! $staff) {
+                        return $query;
+                    }
+
+                    return $query->whereHas('user', function (Builder $userQuery) use ($staff) {
+                        return $userQuery->where('staff', $staff);
+                    });
+                })
+                ->indicateUsing(function (array $data): ?string {
+                    $staff = $data['staff'] ?? null;
+
+                    if (! $staff) {
+                        return null;
+                    }
+
+                    return 'Staff: ' . FileHelper::getStaffOptions()[$staff] ?? $staff;
+                })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

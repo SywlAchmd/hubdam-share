@@ -3,77 +3,78 @@ import { TNavLinks } from "@/types/layouts/TNavLinks";
 export const navLinksId: TNavLinks = [
   {
     id: "beranda",
-    path: "/",
+    path: "/hubdamshare",
     isOpen: null,
     children: [],
   },
   {
     id: "berkas",
-    path: "/berkas",
+    path: "/hubdamshare/berkas",
     isOpen: null,
     children: [],
   },
   {
     id: "divisi",
     path: [
-      "/divisi/staf-pers",
-      "/divisi/staf-sikomlek",
-      "/divisi/staf-pernika",
-      "/divisi/staf-konbekharstal",
-      "/divisi/staf-benghubdam",
-      "/divisi/staf-gudmathub",
-      "/divisi/staf-urlog",
-      "/divisi/staf-urlat",
-      "/divisi/staf-urpam",
-      "/divisi/staf-renproggar",
-      "/divisi/staf-denhubdam",
+      "/hubdamshare/divisi/staf-pers",
+      "/hubdamshare/divisi/staf-sikomlek",
+      "/hubdamshare/divisi/staf-pernika",
+      "/hubdamshare/divisi/staf-konbekharstal",
+      "/hubdamshare/divisi/staf-benghubdam",
+      "/hubdamshare/divisi/staf-gudmathub",
+      "/hubdamshare/divisi/staf-urlog",
+      "/hubdamshare/divisi/staf-urlat",
+      "/hubdamshare/divisi/staf-urpam",
+      "/hubdamshare/divisi/staf-renproggar",
+      "/hubdamshare/divisi/staf-denhubdam",
     ],
     isOpen: false,
     children: [
       {
         id: "staf pers",
-        path: "/divisi/staf-pers",
+        path: "/hubdamshare/divisi/staf-pers",
       },
       {
         id: "staf sikomlek",
-        path: "/divisi/staf-sikomlek",
+        path: "/hubdamshare/divisi/staf-sikomlek",
       },
       {
         id: "staf pernika",
-        path: "/divisi/staf-pernika",
+        path: "/hubdamshare/divisi/staf-pernika",
       },
       {
         id: "staf konbekharstal",
-        path: "/divisi/staf-konbekharstal",
+        path: "/hubdamshare/divisi/staf-konbekharstal",
       },
       {
         id: "staf benghubdam",
-        path: "/divisi/staf-benghubdam",
+        path: "/hubdamshare/divisi/staf-benghubdam",
       },
       {
         id: "staf gudmathub",
-        path: "/divisi/staf-gudmathub",
+        path: "/hubdamshare/divisi/staf-gudmathub",
       },
       {
         id: "staf urlog",
-        path: "/divisi/staf-urlog",
+        path: "/hubdamshare/divisi/staf-urlog",
       },
       {
         id: "staf urlat",
-        path: "/divisi/staf-urlat",
+        path: "/hubdamshare/divisi/staf-urlat",
       },
       {
         id: "staf urpam",
-        path: "/divisi/staf-urpam",
+        path: "/hubdamshare/divisi/staf-urpam",
       },
       {
         id: "staf renproggar",
-        path: "/divisi/staf-renproggar",
+        path: "/hubdamshare/divisi/staf-renproggar",
       },
       {
         id: "staf denhubdam",
-        path: "/divisi/staf-denhubdam",
+        path: "/hubdamshare/divisi/staf-denhubdam",
       },
     ],
   },
 ];
+

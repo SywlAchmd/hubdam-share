@@ -68,9 +68,9 @@ export default function Navbar() {
         <section className="flex w-full items-center justify-between">
           {/* logo */}
           <Link href="/" className="flex items-center gap-5 smdlg:hidden">
-            <img src="/assets/images/logo2.png" alt="logo1" width={80} className="-mr-4" />
+            <img src="/hubdamshare/assets/images/logo2.png" alt="logo1" width={80} className="-mr-4" />
             <h2 className="font-extrabold italic text-forest-green">{appName}</h2>
-            <img src="/assets/images/logo.png" alt="logo2" width={60} />
+            <img src="/hubdamshare/assets/images/logo.png" alt="logo2" width={60} />
           </Link>
 
           {/* Hamburger Button on < 1024px */}
@@ -128,7 +128,7 @@ export default function Navbar() {
           {/* profile */}
           <section>
             <img
-              src={`${auth.user.image ? `${baseUrl}/storage/${auth.user.image}` : "/assets/images/default_avatar.jpg"}`}
+              src={`${auth.user.image ? `${baseUrl}/hubdamshare/storage/${auth.user.image}` : "/hubdamshare/assets/images/default_avatar.jpg"}`}
               alt="user_image"
               className="aspect-square w-12 cursor-pointer overflow-hidden rounded-full"
               onClick={handleProfileClick}
@@ -209,3 +209,4 @@ export default function Navbar() {
     </nav>
   );
 }
+

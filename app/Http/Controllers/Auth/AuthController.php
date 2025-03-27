@@ -33,11 +33,6 @@ class AuthController extends Controller
   {
     $request->authenticate();
 
-    if (! $this->userCanAccess(Auth::user())) {
-      Auth::logout();
-      return redirect()->route('login')->withErrors(['identifier' => 'Anda tidak memiliki akses ke halaman ini.']);
-    }
-
     $request->session()->regenerate();
 
     return redirect()->intended(route('beranda'));
@@ -57,15 +52,5 @@ class AuthController extends Controller
     $request->session()->regenerateToken();
 
     return redirect('/');
-  }
-
-  /**
-   * Check if the user can access the page.
-   * @param $user
-   * @return Booelan
-   */
-  private function userCanAccess($user): bool
-  {
-    return $user && $user->role != 0;
   }
 }
