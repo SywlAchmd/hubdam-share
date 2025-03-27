@@ -8,6 +8,8 @@ import { FormEventHandler } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
 
 export default function Login({ status }: { status?: string }) {
+  const basePath = '/hubdamshare';
+
   const { data, setData, post, processing, errors, reset } = useForm({
     identifier: "",
     password: "",
@@ -28,7 +30,7 @@ export default function Login({ status }: { status?: string }) {
       {/* image */}
       <section className="flex w-full overflow-hidden rounded-2xl bg-white shadow-2xl">
         <section className="h-auto w-1/2 smdlg:hidden">
-          <img src="/assets/images/login-bg.png" alt="login-bg" className="h-full w-full object-cover object-top" />
+          <img src={`${basePath}/assets/images/login-bg.png`} alt="login-bg" className="..." />
         </section>
 
         <section className="flex w-1/2 flex-col items-center justify-center smdlg:w-full">
@@ -95,3 +97,4 @@ export default function Login({ status }: { status?: string }) {
     </section>
   );
 }
+

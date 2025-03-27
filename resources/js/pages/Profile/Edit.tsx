@@ -10,7 +10,7 @@ export default function Profile() {
   const { flash, auth, baseUrl } = usePage().props;
 
   const [preview, setPreview] = useState(
-    auth.user?.image ? `${baseUrl}/storage/${auth.user.image}` : "/assets/images/default_avatar.jpg",
+    auth.user?.image ? `${baseUrl}/storage/${auth.user.image}` : "/hubdamshare/assets/images/default_avatar.jpg",
   );
 
   const [isCropperOpen, setIsCropperOpen] = useState(false);

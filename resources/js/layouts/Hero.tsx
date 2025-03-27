@@ -11,7 +11,7 @@ export default function Hero({
     <div className="flex w-full flex-col">
       <div
         className="relative grid w-full overflow-hidden bg-cover bg-top bg-no-repeat py-72 before:absolute before:left-0 before:top-0 before:z-20 before:h-full before:w-full before:bg-black before:opacity-20 before:content-[''] sm:bg-center sm:py-16"
-        style={{ backgroundImage: `url("/assets/images/${bgImage}")` }}
+        style={{ backgroundImage: `url("/hubdamshare/assets/images/${bgImage}")` }}
       >
         {/* pagename container */}
         <div className="absolute bottom-0 left-1/2 z-40 flex w-4/5 -translate-x-1/2 transform justify-center bg-white py-10 sm:py-3">
@@ -26,3 +26,4 @@ export default function Hero({
     </div>
   );
 }
+

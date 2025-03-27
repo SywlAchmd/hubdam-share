@@ -93,6 +93,6 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     public function getFilamentAvatarUrl(): ?string
     {
-        return $this->image ? '/storage/' . $this->image : $this->getFilamentDefaultAvatar();
+        return $this->image ? '/hubdamshare/storage/' . $this->image : $this->getFilamentDefaultAvatar();
     }
 }

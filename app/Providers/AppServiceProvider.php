@@ -1,10 +1,12 @@
-<?php
+<?php	
 
 namespace App\Providers;
 
 use Carbon\Carbon;
 use Filament\Facades\Filament;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +23,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+	Livewire::setScriptRoute(function ($handle) {
+            return Route::get('/hubdamshare/livewire/livewire.js', $handle);
+        });
+
+	Livewire::setUpdateRoute(function ($handle) {
+            return Route::post('/hubdamshare/livewire/update', $handle);
+    	});
+
         config(['app.locale' => 'id']);
         Carbon::setLocale('id');
 
