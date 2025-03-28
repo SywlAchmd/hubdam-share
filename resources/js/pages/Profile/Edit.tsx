@@ -2,15 +2,16 @@ import InputError from "@/components/atoms/InputError";
 import PrimaryButton from "@/components/atoms/PrimaryButton";
 import { CropperModal } from "@/components/molecules/CropperModal";
 import FormInput from "@/components/molecules/FormInput";
+import { getAssetUrl, getStorageUrl } from "@/utils/pathHelper";
 import { Head, useForm, usePage } from "@inertiajs/react";
 import { FormEventHandler, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function Profile() {
-  const { flash, auth, baseUrl } = usePage().props;
+  const { flash, auth } = usePage().props;
 
   const [preview, setPreview] = useState(
-    auth.user?.image ? `${baseUrl}/storage/${auth.user.image}` : "/hubdamshare/assets/images/default_avatar.jpg",
+    typeof auth.user?.image === "string" ? getStorageUrl(auth.user.image) : getAssetUrl("images/default_avatar.jpg"),
   );
 
   const [isCropperOpen, setIsCropperOpen] = useState(false);
@@ -60,7 +61,7 @@ export default function Profile() {
       if (file.size > 2 * 1024 * 1024) {
         toast.error("File tidak boleh lebih dari 2 MB.");
         setData("image", null);
-        setPreview("/assets/images/default_avatar.jpg");
+        setPreview(getAssetUrl("images/default_avatar.jpg"));
         return;
       }
 

@@ -1,4 +1,5 @@
 import { User } from "@/types";
+import { getAssetUrl, getStorageUrl } from "@/utils/pathHelper";
 import { getStaffDisplayName } from "@/utils/staffOptions";
 
 export default function CardName({ name, staff, image }: User) {
@@ -6,7 +7,7 @@ export default function CardName({ name, staff, image }: User) {
     <section className="w-fit rounded-md bg-white p-2 shadow-xl">
       <img
         alt={name}
-        src={image ? "/hubdamshare/storage/" + image : "/hubdamshare/assets/images/default_avatar.jpg"}
+        src={typeof image === "string" ? getStorageUrl(image) : getAssetUrl("images/default_avatar.jpg")}
         className="aspect-square h-auto max-w-[250px] object-cover shadow-md smdlg:w-full"
       />
 
@@ -17,4 +18,3 @@ export default function CardName({ name, staff, image }: User) {
     </section>
   );
 }
-

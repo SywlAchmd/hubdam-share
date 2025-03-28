@@ -23,11 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-	Livewire::setScriptRoute(function ($handle) {
+	    Livewire::setScriptRoute(function ($handle) {
             return Route::get('/hubdamshare/livewire/livewire.js', $handle);
         });
 
-	Livewire::setUpdateRoute(function ($handle) {
+	    Livewire::setUpdateRoute(function ($handle) {
             return Route::post('/hubdamshare/livewire/update', $handle);
     	});
 
