@@ -176,7 +176,7 @@ export default function Navbar() {
                   key={index}
                   href={path}
                   onClick={handleClickOutsideDropdown}
-                  className={`${currentPathname === path ? "bg-forest-green font-bold text-white" : ""} flex h-full cursor-pointer items-center justify-between gap-2 px-6 py-3 text-sm capitalize hover:bg-forest-green hover:font-bold hover:text-white`}
+                  className={`${isActivePath(currentPathname, path) ? "bg-forest-green font-bold text-white" : ""} flex h-full cursor-pointer items-center justify-between gap-2 px-6 py-3 text-sm capitalize hover:bg-forest-green hover:font-bold hover:text-white`}
                 >
                   <p>{id}</p>
                 </Link>
