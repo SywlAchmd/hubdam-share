@@ -15,7 +15,7 @@ export default function InputSearch({ value, onChange, onSearch, onReset }: Inpu
       <section className="flex h-fit items-center justify-center rounded-lg border-2 border-solid border-gray-300 bg-white px-2">
         <IoIosSearch className="size-6 text-gray-400" />
         <TextInput
-          placeholder="Cari..."
+          placeholder="Cari Nama atau Berkas"
           className="input-sm max-w-[200px] border-none outline-none placeholder:text-gray-400 focus:border-none focus:ring-transparent smdlg:w-full"
           value={value}
           onChange={(e) => onChange(e.target.value)}

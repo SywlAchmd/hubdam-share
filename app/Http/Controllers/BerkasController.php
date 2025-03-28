@@ -18,13 +18,17 @@ class BerkasController extends Controller
     {
         $search = $request->get('search', '');
         $filter = $request->get('filter', 'all');
+        $tab = $request->get('tab', 'all');
 
-        $query = File::with(['user', 'media'])
-            ->where('user_id', auth()->user()->id);
+        $query = File::with(['user', 'media']);
 
         if ($search !== '') {
-            $query->whereHas('media', function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%");
+            $query->where(function ($query) use ($search) {
+                $query->whereHas('media', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                })->orWhereHas('user', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                });
             });
         }
 
@@ -32,6 +36,12 @@ class BerkasController extends Controller
             $query->whereHas('media', function ($q) use ($filter) {
                 $q->where('collection_name', 'like', "%{$filter}%");
             });
+        }
+
+        if ($tab === 'mine') {
+            $query->where('user_id', auth()->id());
+        } elseif ($tab === 'staff') {
+            $query->where('user_id', '!=', auth()->id());
         }
 
         $files = $query->orderBy("created_at", "desc")->paginate(5);

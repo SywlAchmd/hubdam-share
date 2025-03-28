@@ -39,5 +39,5 @@ export interface TMedia {
 
 export interface TUser {
   name: string;
-  email: string;
+  staff: string;
 }

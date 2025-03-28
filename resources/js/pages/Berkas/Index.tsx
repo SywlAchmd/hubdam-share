@@ -6,9 +6,11 @@ import { formatDate } from "@/utils/parserDate";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { toast } from "sonner";
 import { Hero } from "@/layouts";
-import { filterOptions } from "@/utils/fileOptions";
+import { filterOptions, getFileTypeLabel, tabOptions } from "@/utils/fileOptions";
 import UploadFileModal from "@/components/molecules/UploadFileModal";
 import { MdDownload } from "react-icons/md";
+import { getStaffDisplayName } from "@/utils/staffOptions";
+import { getPath } from "@/utils/pathHelper";
 
 export default function Berkas({ files }: TBerkasProps) {
   const { flash } = usePage().props;
@@ -16,6 +18,7 @@ export default function Berkas({ files }: TBerkasProps) {
 
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
+  const [tabFilter, setTabFilter] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -27,32 +30,39 @@ export default function Berkas({ files }: TBerkasProps) {
     }
   }, [flash]);
 
-  const handleSearch = () => {
+  const applyFilter = (params: Partial<{ search: string; filter: string; tab: string }>) => {
     router.get(
-      "/berkas",
-      { search, filter },
+      getPath("/berkas"),
+      {
+        search,
+        filter,
+        tab: tabFilter,
+        ...params,
+      },
       {
         preserveScroll: true,
         preserveState: true,
       },
     );
+  };
+
+  const handleSearch = () => {
+    applyFilter({});
   };
 
   const handleReset = () => {
     setSearch("");
-    router.get("/berkas", { filter }, { preserveScroll: true, preserveState: true });
+    applyFilter({ search: "" });
   };
 
   const handleFilter = (value: string) => {
     setFilter(value);
-    router.get(
-      "/berkas",
-      { search, filter: value },
-      {
-        preserveScroll: true,
-        preserveState: true,
-      },
-    );
+    applyFilter({ filter: value });
+  };
+
+  const handleTabFilterChange = (value: string) => {
+    setTabFilter(value);
+    applyFilter({ tab: value });
   };
 
   const handleDownload = (id: number) => {
@@ -77,24 +87,28 @@ export default function Berkas({ files }: TBerkasProps) {
       <Hero pageName="Berkas" bgImage="berkas-bg.png" />
       <section className="single-section-padding">
         <section className="flex items-center justify-between">
-          <h1 className="page-title mb-2">Semua File</h1>
+          <h1 className="page-title mb-2">Daftar Berkas</h1>
 
           <button onClick={() => setIsModalOpen(true)} className="btn btn-outline btn-success btn-sm">
-            Upload File
+            Unggah Berkas
           </button>
         </section>
 
         <DataTable
-          title="Browse Files"
+          title=""
           searchable
           filterable
+          tabsFilterable
           search={search}
           filter={filter}
           options={filterOptions}
+          tabOptions={tabOptions}
+          tabFilter={tabFilter}
           handleSearch={handleSearch}
           handleFilter={handleFilter}
           handleReset={handleReset}
           onSearchChange={setSearch}
+          onTabFilterChange={handleTabFilterChange}
           columns={[
             {
               title: "No",
@@ -107,12 +121,12 @@ export default function Berkas({ files }: TBerkasProps) {
               render: (value: TUser) => value.name,
             },
             {
-              title: "Email",
+              title: "Staff",
               dataIndex: "user",
-              render: (value: TUser) => value.email,
+              render: (value: TUser) => getStaffDisplayName(value.staff),
             },
             {
-              title: "File",
+              title: "Berkas",
               dataIndex: "media",
               render: (value: TMedia[] | TMedia) =>
                 Array.isArray(value) ? (
@@ -142,13 +156,12 @@ export default function Berkas({ files }: TBerkasProps) {
                 ),
             },
             {
-              title: "Tipe File",
+              title: "Tipe Berkas",
               dataIndex: "media",
-              render: (value: TMedia[] | TMedia) => (
-                <span className="capitalize">
-                  {Array.isArray(value) ? value[0].collection_name : value.collection_name}
-                </span>
-              ),
+              render: (value: TMedia[] | TMedia) => {
+                const collection = Array.isArray(value) ? value[0].collection_name : value.collection_name;
+                return <span className="capitalize">{getFileTypeLabel(collection)}</span>;
+              },
             },
             {
               title: "Waktu",
