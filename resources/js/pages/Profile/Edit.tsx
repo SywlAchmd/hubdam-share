@@ -99,11 +99,11 @@ export default function Profile() {
 
   return (
     <>
-      <section className="single-section-padding flex min-h-screen gap-10">
+      <section className="single-section-padding flex min-h-screen gap-10 smd:flex-col">
         <Head title="Profile" />
 
         {/* Profile picture */}
-        <section className="section-bg w-1/4 overflow-hidden">
+        <section className="section-bg w-1/4 overflow-hidden smd:w-full">
           <section className="bg-slate-200 p-3 font-medium text-olive-gray">Foto Profil</section>
           <section className="flex flex-col items-center gap-4 p-10 text-xs">
             <img
@@ -132,7 +132,7 @@ export default function Profile() {
         </section>
 
         {/* Account details */}
-        <section className="section-bg w-3/4 overflow-hidden">
+        <section className="section-bg w-3/4 overflow-hidden smd:w-full">
           <section className="bg-slate-200 p-3 font-medium text-olive-gray">Detail Akun</section>
 
           <form className="flex flex-col gap-4 p-5" onSubmit={handleSubmit}>

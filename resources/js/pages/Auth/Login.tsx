@@ -8,7 +8,7 @@ import { FormEventHandler } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
 
 export default function Login({ status }: { status?: string }) {
-  const basePath = '/hubdamshare';
+  const basePath = "/hubdamshare";
 
   const { data, setData, post, processing, errors, reset } = useForm({
     identifier: "",
@@ -24,7 +24,7 @@ export default function Login({ status }: { status?: string }) {
   };
 
   return (
-    <section className="flex h-screen w-full p-28">
+    <section className="flex h-screen w-full p-28 sm:p-0">
       <Head title="Log in" />
 
       {/* image */}
@@ -35,7 +35,9 @@ export default function Login({ status }: { status?: string }) {
 
         <section className="flex w-1/2 flex-col items-center justify-center smdlg:w-full">
           <section className="rounded-xl p-10 smdlg:bg-white">
-            <h2 className="py-7 text-center text-4xl font-bold text-forest-green">Welcome Back Soldier!</h2>
+            <h2 className="py-7 text-center text-4xl font-bold text-forest-green sm:text-3xl">
+              Selamat Datang Prajurit!
+            </h2>
 
             <form onSubmit={submit} className="flex flex-col gap-4">
               {status && <div className="mb-4 text-sm font-medium text-green-600">{status}</div>}
@@ -48,9 +50,9 @@ export default function Login({ status }: { status?: string }) {
                     id="identifier"
                     type="text"
                     name="identifier"
-                    placeholder="Masukan Username atau Email"
+                    placeholder="Username atau Email"
                     value={data.identifier}
-                    className="w-full border-none placeholder-gray-400 outline-none focus:ring-transparent"
+                    className="w-full border-none text-black placeholder-gray-400 outline-none focus:ring-transparent sm:text-sm"
                     autoComplete="username"
                     isFocused={true}
                     onChange={(e) => setData("identifier", e.target.value)}
@@ -71,7 +73,7 @@ export default function Login({ status }: { status?: string }) {
                     name="password"
                     placeholder="Masukan Password"
                     value={data.password}
-                    className="w-full border-none placeholder-gray-400 outline-none focus:ring-transparent"
+                    className="w-full border-none text-black placeholder-gray-400 outline-none focus:ring-transparent sm:text-sm"
                     autoComplete="current-password"
                     onChange={(e) => setData("password", e.target.value)}
                   />
@@ -97,4 +99,3 @@ export default function Login({ status }: { status?: string }) {
     </section>
   );
 }
-

@@ -16,7 +16,7 @@ export default function InputSearch({ value, onChange, onSearch, onReset }: Inpu
         <IoIosSearch className="size-6 text-gray-400" />
         <TextInput
           placeholder="Cari Nama atau Berkas"
-          className="input-sm max-w-[200px] border-none outline-none placeholder:text-gray-400 focus:border-none focus:ring-transparent smdlg:w-full"
+          className="input-sm max-w-[200px] border-none text-black outline-none placeholder:text-gray-400 focus:border-none focus:ring-transparent smdlg:w-full"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && onSearch()}

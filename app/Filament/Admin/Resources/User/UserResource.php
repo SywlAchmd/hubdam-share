@@ -93,6 +93,7 @@ class UserResource extends Resource
                     ->icon(fn(User $record) => $record->image ? Storage::disk('public')->url($record->image) : asset('assets/images/default_avatar.jpg'))
                     ->size(Tables\Columns\TextColumn\TextColumnSize::Medium)
                     ->weight(\Filament\Support\Enums\FontWeight::Medium)
+                    ->wrap()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('username')
                     ->searchable(),

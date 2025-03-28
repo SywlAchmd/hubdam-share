@@ -198,6 +198,7 @@ export default function Navbar() {
                         <Link
                           key={`children-${index}`}
                           href={path}
+                          onClick={handleClickOutsideDropdown}
                           className={`${currentPathname === path ? "bg-forest-green-dark font-bold text-white" : "bg-slate-200"} flex w-full items-center justify-between gap-10 px-10 py-4 text-sm capitalize hover:bg-forest-green-dark hover:font-bold hover:text-white`}
                         >
                           <p>{id}</p>
