@@ -19,7 +19,7 @@ jobs:
           COMMIT_AUTHOR="${{ github.event.workflow_run.head_commit.author.name }}"
           REPO="${{ github.repository }}"
           BRANCH="${{ github.event.workflow_run.head_branch }}"
-          TIME="$(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          TIME="$(TZ='Asia/Makassar' date +'%Y-%m-%d %H:%M:%S WITA')"
 
           if [ "$STATUS" == "success" ]; then
             if [ "$WORKFLOW_NAME" == "Run Tests" ]; then
