@@ -36,4 +36,6 @@ jobs:
         run: npm run build
 
       - name: Run Laravel tests
+        env:
+          APP_KEY: ${{ secrets.APP_KEY }}
         run: php artisan test
