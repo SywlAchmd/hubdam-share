@@ -1,0 +1,43 @@
+name: Notify Telegram
+
+on:
+  workflow_run:
+    workflows: ["Run Tests", "Deploy"]
+    types:
+      - completed
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send Telegram notification
+        run: |
+          STATUS="${{ github.event.workflow_run.conclusion }}"
+          WORKFLOW_NAME="${{ github.event.workflow_run.name }}"
+          COMMIT_MSG="${{ github.event.workflow_run.head_commit.message }}"
+          COMMIT_AUTHOR="${{ github.event.workflow_run.head_commit.author.name }}"
+          REPO="${{ github.repository }}"
+          BRANCH="${{ github.event.workflow_run.head_branch }}"
+          TIME="$(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+
+          if [ "$STATUS" == "success" ]; then
+            if [ "$WORKFLOW_NAME" == "Run Tests" ]; then
+              MESSAGE="✅ *Test berhasil!*\n*Repo:* \`$REPO\`\n*Branch:* \`$BRANCH\`\n*Commit:* \`$COMMIT_MSG\`\n*Oleh:* \`$COMMIT_AUTHOR\`\n🕒 $TIME"
+            else
+              MESSAGE="🚀 *Deploy berhasil!*\n*Workflow:* \`$WORKFLOW_NAME\`\n*Repo:* \`$REPO\`\n*Branch:* \`$BRANCH\`\n*Commit:* \`$COMMIT_MSG\`\n*Oleh:* \`$COMMIT_AUTHOR\`\n🕒 $TIME"
+            fi
+          else
+            if [ "$WORKFLOW_NAME" == "Run Tests" ]; then
+              MESSAGE="❌ *Test gagal!*\n*Repo:* \`$REPO\`\n*Branch:* \`$BRANCH\`\n*Commit:* \`$COMMIT_MSG\`\n*Oleh:* \`$COMMIT_AUTHOR\`\n🕒 $TIME"
+            else
+              MESSAGE="🛑 *Deploy gagal!*\n*Workflow:* \`$WORKFLOW_NAME\`\n*Repo:* \`$REPO\`\n*Branch:* \`$BRANCH\`\n*Commit:* \`$COMMIT_MSG\`\n*Oleh:* \`$COMMIT_AUTHOR\`\n🕒 $TIME"
+            fi
+          fi
+
+          echo -e "Telegram message:\n$MESSAGE\n---"
+
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage \
+            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+            -d text="$MESSAGE" \
+            -d parse_mode=Markdown
