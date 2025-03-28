@@ -52,10 +52,6 @@ jobs:
       - name: Build assets
         run: npm run build
 
-      - name: Generate app key (fallback if not using secrets)
-        run: php artisan key:generate --env=testing
-        if: ${{ !secrets.APP_KEY }}
-
       - name: Run Migrations (Testing DB)
         env:
           APP_ENV: testing
