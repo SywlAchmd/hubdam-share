@@ -1,64 +1,77 @@
-- name: Send Telegram notification
-  run: |
-    STATUS="${{ github.event.workflow_run.conclusion }}"
-    WORKFLOW_NAME="${{ github.event.workflow_run.name }}"
-    COMMIT_MSG="${{ github.event.workflow_run.head_commit.message }}"
-    COMMIT_AUTHOR="${{ github.event.workflow_run.head_commit.author.name }}"
-    REPO="${{ github.repository }}"
-    BRANCH="${{ github.event.workflow_run.head_branch }}"
-    TIME="$(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+name: Notify Telegram
 
-    if [ "$STATUS" == "success" ]; then
-      if [ "$WORKFLOW_NAME" == "Run Tests" ]; then
-        MESSAGE=$(cat <<EOF
-        ✅ *Test berhasil!*
-        *Repo:* \`$REPO\`
-        *Branch:* \`$BRANCH\`
-        *Commit:* \`$COMMIT_MSG\`
-        *Oleh:* \`$COMMIT_AUTHOR\`
-        🕒 $TIME
-        EOF
-        )
-      else
-        MESSAGE=$(cat <<EOF
-        🚀 *Deploy berhasil!*
-        *Workflow:* \`$WORKFLOW_NAME\`
-        *Repo:* \`$REPO\`
-        *Branch:* \`$BRANCH\`
-        *Commit:* \`$COMMIT_MSG\`
-        *Oleh:* \`$COMMIT_AUTHOR\`
-        🕒 $TIME
-        EOF
-        )
-      fi
-    else
-      if [ "$WORKFLOW_NAME" == "Run Tests" ]; then
-        MESSAGE=$(cat <<EOF
-        ❌ *Test gagal!*
-        *Repo:* \`$REPO\`
-        *Branch:* \`$BRANCH\`
-        *Commit:* \`$COMMIT_MSG\`
-        *Oleh:* \`$COMMIT_AUTHOR\`
-        🕒 $TIME
-        EOF
-        )
-      else
-        MESSAGE=$(cat <<EOF
-        🛑 *Deploy gagal!*
-        *Workflow:* \`$WORKFLOW_NAME\`
-        *Repo:* \`$REPO\`
-        *Branch:* \`$BRANCH\`
-        *Commit:* \`$COMMIT_MSG\`
-        *Oleh:* \`$COMMIT_AUTHOR\`
-        🕒 $TIME
-        EOF
-        )
-      fi
-    fi
+on:
+  workflow_run:
+    workflows: ["Run Tests", "Deploy to VPS"]
+    types:
+      - completed
 
-    echo -e "Telegram message:\n$MESSAGE\n---"
+jobs:
+  notify:
+    runs-on: ubuntu-latest
 
-    curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage \
-      -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-      --data-urlencode "text=$MESSAGE" \
-      -d parse_mode=Markdown
+    steps:
+      - name: Send Telegram notification
+        run: |
+          STATUS="${{ github.event.workflow_run.conclusion }}"
+          WORKFLOW_NAME="${{ github.event.workflow_run.name }}"
+          COMMIT_MSG="${{ github.event.workflow_run.head_commit.message }}"
+          COMMIT_AUTHOR="${{ github.event.workflow_run.head_commit.author.name }}"
+          REPO="${{ github.repository }}"
+          BRANCH="${{ github.event.workflow_run.head_branch }}"
+          TIME="$(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+
+          if [ "$STATUS" == "success" ]; then
+            if [ "$WORKFLOW_NAME" == "Run Tests" ]; then
+              MESSAGE=$(cat <<EOF
+              ✅ *Test berhasil!*
+              *Repo:* \`$REPO\`
+              *Branch:* \`$BRANCH\`
+              *Commit:* \`$COMMIT_MSG\`
+              *Oleh:* \`$COMMIT_AUTHOR\`
+              🕒 $TIME
+              EOF
+              )
+            else
+              MESSAGE=$(cat <<EOF
+              🚀 *Deploy berhasil!*
+              *Workflow:* \`$WORKFLOW_NAME\`
+              *Repo:* \`$REPO\`
+              *Branch:* \`$BRANCH\`
+              *Commit:* \`$COMMIT_MSG\`
+              *Oleh:* \`$COMMIT_AUTHOR\`
+              🕒 $TIME
+              EOF
+              )
+            fi
+          else
+            if [ "$WORKFLOW_NAME" == "Run Tests" ]; then
+              MESSAGE=$(cat <<EOF
+              ❌ *Test gagal!*
+              *Repo:* \`$REPO\`
+              *Branch:* \`$BRANCH\`
+              *Commit:* \`$COMMIT_MSG\`
+              *Oleh:* \`$COMMIT_AUTHOR\`
+              🕒 $TIME
+              EOF
+              )
+            else
+              MESSAGE=$(cat <<EOF
+              🛑 *Deploy gagal!*
+              *Workflow:* \`$WORKFLOW_NAME\`
+              *Repo:* \`$REPO\`
+              *Branch:* \`$BRANCH\`
+              *Commit:* \`$COMMIT_MSG\`
+              *Oleh:* \`$COMMIT_AUTHOR\`
+              🕒 $TIME
+              EOF
+              )
+            fi
+          fi
+
+          echo -e "Telegram message:\n$MESSAGE\n---"
+
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage \
+            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+            --data-urlencode "text=$MESSAGE" \
+            -d parse_mode=Markdown
