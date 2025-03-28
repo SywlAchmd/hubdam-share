@@ -12,6 +12,20 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: hubdam_share_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -26,6 +40,9 @@ jobs:
         with:
           node-version: 20
 
+      - name: Copy .env.testing
+        run: cp .env.testing.example .env.testing
+
       - name: Install PHP dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
@@ -35,7 +52,30 @@ jobs:
       - name: Build assets
         run: npm run build
 
-      - name: Run Laravel tests
+      - name: Generate app key (fallback if not using secrets)
+        run: php artisan key:generate --env=testing
+        if: ${{ !secrets.APP_KEY }}
+
+      - name: Run Migrations (Testing DB)
         env:
+          APP_ENV: testing
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: hubdam_share_test
+          DB_USERNAME: root
+          DB_PASSWORD: root
           APP_KEY: ${{ secrets.APP_KEY }}
-        run: php artisan test
+        run: php artisan migrate --env=testing
+
+      - name: Run Laravel Tests
+        env:
+          APP_ENV: testing
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: hubdam_share_test
+          DB_USERNAME: root
+          DB_PASSWORD: root
+          APP_KEY: ${{ secrets.APP_KEY }}
+        run: php artisan test --env=testing
