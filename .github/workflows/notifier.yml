@@ -24,48 +24,48 @@ jobs:
           if [ "$STATUS" == "success" ]; then
             if [ "$WORKFLOW_NAME" == "Run Tests" ]; then
               MESSAGE=$(cat <<EOF
-              ✅ *Test berhasil!*
-              *Repo:* \`$REPO\`
-              *Branch:* \`$BRANCH\`
-              *Commit:* \`$COMMIT_MSG\`
-              *Oleh:* \`$COMMIT_AUTHOR\`
-              🕒 $TIME
-              EOF
-              )
+✅ *Test berhasil!*
+*Repo:* \`$REPO\`
+*Branch:* \`$BRANCH\`
+*Commit:* \`$COMMIT_MSG\`
+*Oleh:* \`$COMMIT_AUTHOR\`
+🕒 $TIME
+EOF
+)
             else
               MESSAGE=$(cat <<EOF
-              🚀 *Deploy berhasil!*
-              *Workflow:* \`$WORKFLOW_NAME\`
-              *Repo:* \`$REPO\`
-              *Branch:* \`$BRANCH\`
-              *Commit:* \`$COMMIT_MSG\`
-              *Oleh:* \`$COMMIT_AUTHOR\`
-              🕒 $TIME
-              EOF
-              )
+🚀 *Deploy berhasil!*
+*Workflow:* \`$WORKFLOW_NAME\`
+*Repo:* \`$REPO\`
+*Branch:* \`$BRANCH\`
+*Commit:* \`$COMMIT_MSG\`
+*Oleh:* \`$COMMIT_AUTHOR\`
+🕒 $TIME
+EOF
+)
             fi
           else
             if [ "$WORKFLOW_NAME" == "Run Tests" ]; then
               MESSAGE=$(cat <<EOF
-              ❌ *Test gagal!*
-              *Repo:* \`$REPO\`
-              *Branch:* \`$BRANCH\`
-              *Commit:* \`$COMMIT_MSG\`
-              *Oleh:* \`$COMMIT_AUTHOR\`
-              🕒 $TIME
-              EOF
-              )
+❌ *Test gagal!*
+*Repo:* \`$REPO\`
+*Branch:* \`$BRANCH\`
+*Commit:* \`$COMMIT_MSG\`
+*Oleh:* \`$COMMIT_AUTHOR\`
+🕒 $TIME
+EOF
+)
             else
               MESSAGE=$(cat <<EOF
-              🛑 *Deploy gagal!*
-              *Workflow:* \`$WORKFLOW_NAME\`
-              *Repo:* \`$REPO\`
-              *Branch:* \`$BRANCH\`
-              *Commit:* \`$COMMIT_MSG\`
-              *Oleh:* \`$COMMIT_AUTHOR\`
-              🕒 $TIME
-              EOF
-              )
+🛑 *Deploy gagal!*
+*Workflow:* \`$WORKFLOW_NAME\`
+*Repo:* \`$REPO\`
+*Branch:* \`$BRANCH\`
+*Commit:* \`$COMMIT_MSG\`
+*Oleh:* \`$COMMIT_AUTHOR\`
+🕒 $TIME
+EOF
+)
             fi
           fi
 
