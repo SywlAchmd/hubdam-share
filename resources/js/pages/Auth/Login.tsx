@@ -24,7 +24,7 @@ export default function Login({ status }: { status?: string }) {
   };
 
   return (
-    <section className="flex h-screen w-full p-28 sm:p-0">
+    <section className="flex h-screen w-full p-24 mdlg:p-10 sm:p-0">
       <Head title="Log in" />
 
       {/* image */}
