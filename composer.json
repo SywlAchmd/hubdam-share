@@ -9,6 +9,7 @@
         "php": "^8.2",
         "codeat3/blade-phosphor-icons": "^2.0",
         "filament/filament": "^3.2",
+        "filament/notifications": "^3.0",
         "filament/spatie-laravel-media-library-plugin": "^3.2",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^11.31",

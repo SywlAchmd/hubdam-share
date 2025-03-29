@@ -2,6 +2,11 @@
 
 namespace App\Helpers;
 
+use App\Filament\Admin\Resources\File\ExcelResource;
+use App\Filament\Admin\Resources\File\ImageResource;
+use App\Filament\Admin\Resources\File\PDFResource;
+use App\Filament\Admin\Resources\File\PowerPointResource;
+use App\Filament\Admin\Resources\File\WordResource;
 use ZipArchive;
 
 class FileHelper
@@ -93,5 +98,17 @@ class FileHelper
       'renproggar' => 'Staf Renproggar',
       'denhubdam' => 'Staf Denhubdam'
     ];
+  }
+
+  public static function resolveResourceFromCollection(string $collection): ?string
+  {
+    return match ($collection) {
+      'file-pdf' => PDFResource::class,
+      'file-word' => WordResource::class,
+      'file-excel' => ExcelResource::class,
+      'file-ppt' => PowerPointResource::class,
+      'file-image' => ImageResource::class,
+      default => null,
+    };
   }
 }
