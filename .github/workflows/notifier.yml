@@ -17,6 +17,7 @@ jobs:
           WORKFLOW_NAME="${{ github.event.workflow_run.name }}"
           COMMIT_MSG="${{ github.event.workflow_run.head_commit.message }}"
           COMMIT_AUTHOR="${{ github.event.workflow_run.head_commit.author.name }}"
+          COMMIT_URL="https://github.com/$REPO/commit/${{ github.event.workflow_run.head_sha }}"
           REPO="${{ github.repository }}"
           BRANCH="${{ github.event.workflow_run.head_branch }}"
           TIME="$(TZ='Asia/Makassar' date +'%Y-%m-%d %H:%M:%S WITA')"
