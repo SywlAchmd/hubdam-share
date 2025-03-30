@@ -23,15 +23,15 @@ jobs:
 
           if [ "$STATUS" == "success" ]; then
             if [ "$WORKFLOW_NAME" == "Run Tests" ]; then
-              echo -e "✅ *Test berhasil!*\n*Repo:* \`$REPO\`\n*Branch:* \`$BRANCH\`\n*Commit:* \`$COMMIT_MSG\`\n*Oleh:* \`$COMMIT_AUTHOR\`\n🕒 $TIME" > message.txt
+              echo -e "✅ *Test berhasil!*\n*Repo:* \`$REPO\`\n*Branch:* \`$BRANCH\`\n*Commit:* \`$COMMIT_MSG\`\n🔗 [Lihat Commit]($COMMIT_URL)\n*Oleh:* \`$COMMIT_AUTHOR\`\n🕒 $TIME" > message.txt
             else
-              echo -e "🚀 *Deploy berhasil!*\n*Workflow:* \`$WORKFLOW_NAME\`\n*Repo:* \`$REPO\`\n*Branch:* \`$BRANCH\`\n*Commit:* \`$COMMIT_MSG\`\n*Oleh:* \`$COMMIT_AUTHOR\`\n🕒 $TIME" > message.txt
+              echo -e "🚀 *Deploy berhasil!*\n*Workflow:* \`$WORKFLOW_NAME\`\n*Repo:* \`$REPO\`\n*Branch:* \`$BRANCH\`\n*Commit:* \`$COMMIT_MSG\`\n🔗 [Lihat Commit]($COMMIT_URL)\n*Oleh:* \`$COMMIT_AUTHOR\`\n🕒 $TIME" > message.txt
             fi
           else
             if [ "$WORKFLOW_NAME" == "Run Tests" ]; then
-              echo -e "❌ *Test gagal!*\n*Repo:* \`$REPO\`\n*Branch:* \`$BRANCH\`\n*Commit:* \`$COMMIT_MSG\`\n*Oleh:* \`$COMMIT_AUTHOR\`\n🕒 $TIME" > message.txt
+              echo -e "❌ *Test gagal!*\n*Repo:* \`$REPO\`\n*Branch:* \`$BRANCH\`\n*Commit:* \`$COMMIT_MSG\`\n🔗 [Lihat Commit]($COMMIT_URL)\n*Oleh:* \`$COMMIT_AUTHOR\`\n🕒 $TIME" > message.txt
             else
-              echo -e "🛑 *Deploy gagal!*\n*Workflow:* \`$WORKFLOW_NAME\`\n*Repo:* \`$REPO\`\n*Branch:* \`$BRANCH\`\n*Commit:* \`$COMMIT_MSG\`\n*Oleh:* \`$COMMIT_AUTHOR\`\n🕒 $TIME" > message.txt
+              echo -e "🛑 *Deploy gagal!*\n*Workflow:* \`$WORKFLOW_NAME\`\n*Repo:* \`$REPO\`\n*Branch:* \`$BRANCH\`\n*Commit:* \`$COMMIT_MSG\`\n🔗 [Lihat Commit]($COMMIT_URL)\n*Oleh:* \`$COMMIT_AUTHOR\`\n🕒 $TIME" > message.txt
             fi
           fi
 
