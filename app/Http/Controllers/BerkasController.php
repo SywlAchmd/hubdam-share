@@ -21,6 +21,7 @@ class BerkasController extends Controller
         $tab = $request->get('tab', 'all');
 
         $query = File::with(['user', 'media']);
+        // $query = File::with(['user', 'media'])->has('media');
 
         if ($search !== '') {
             $query->where(function ($query) use ($search) {

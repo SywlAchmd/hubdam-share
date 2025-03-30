@@ -1,10 +1,10 @@
-import { Link } from "@inertiajs/react";
 import React from "react";
 import { Field } from "@headlessui/react";
 import SelectDropdown from "../atoms/SelectDropdown";
 import InputSearch from "../molecules/InputSearch";
-import FilterTabs from "../molecules/FilterTabs"; // import komponen baru
+import FilterTabs from "../molecules/FilterTabs";
 import { PaginationProps } from "@/types/components/TPagination";
+import Pagination from "../molecules/Pagination";
 
 type DataTableProps = {
   dataSource: any[];
@@ -109,7 +109,13 @@ export default function DataTable({
                     {columns.map((column) => (
                       <td key={column.dataIndex} className="text-black">
                         {column.render ? (
-                          column.render(data[column.dataIndex], index, data)
+                          (() => {
+                            try {
+                              return column.render(data[column.dataIndex], index, data);
+                            } catch (e) {
+                              return <span className="italic text-gray-400">Tidak diketahui</span>;
+                            }
+                          })()
                         ) : (
                           <>
                             {typeof data[column.dataIndex] === "object" || Array.isArray(data[column.dataIndex])
@@ -127,18 +133,7 @@ export default function DataTable({
         </div>
 
         <div className="flex justify-end">
-          <div className="join-forest-green join">
-            {pagination.links.map((link, index) => (
-              <Link
-                href={link.url ? link.url : ""}
-                key={`pagination-link-${index}`}
-                className={`btn join-item btn-sm ${link.active ? "btn-active" : ""} ${!link.url ? "btn-disabled" : ""}`}
-                preserveScroll
-                dangerouslySetInnerHTML={{ __html: link.label }}
-                disabled={!link.url}
-              ></Link>
-            ))}
-          </div>
+          <Pagination pagination={pagination} />
         </div>
       </section>
     </>

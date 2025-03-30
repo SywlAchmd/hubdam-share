@@ -1,9 +1,10 @@
-import CardName from "@/components/pages/CardName";
+import { useState } from "react";
+import { Head, router } from "@inertiajs/react";
 import { Hero } from "@/layouts";
 import { TStaffProps } from "@/types/components/TStaff";
-import { Head, Link, router } from "@inertiajs/react";
+import CardName from "@/components/pages/CardName";
 import InputSearch from "@/components/molecules/InputSearch";
-import { useState } from "react";
+import Pagination from "@/components/molecules/Pagination";
 
 export default function Staff({ staff, type }: TStaffProps) {
   const { data, ...pagination } = staff;
@@ -44,18 +45,7 @@ export default function Staff({ staff, type }: TStaffProps) {
         </section>
 
         <section className="flex justify-end">
-          <div className="join-forest-green join">
-            {pagination.links.map((link, index) => (
-              <Link
-                href={link.url ? link.url : ""}
-                key={`pagination-link-${index}`}
-                className={`btn join-item btn-sm ${link.active ? "btn-active" : ""} ${!link.url ? "btn-disabled" : ""}`}
-                preserveScroll
-                dangerouslySetInnerHTML={{ __html: link.label }}
-                disabled={!link.url}
-              ></Link>
-            ))}
-          </div>
+          <Pagination pagination={pagination} />
         </section>
       </section>
     </>
