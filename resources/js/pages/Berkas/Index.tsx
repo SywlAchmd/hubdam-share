@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Head, router, usePage } from "@inertiajs/react";
-import DataTable from "@/components/organisms/DataTable";
-import { TBerkasProps, TMedia, TUser } from "@/types/components/TBerkas";
-import { formatDate } from "@/utils/parserDate";
+import { MdDownload } from "react-icons/md";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { toast } from "sonner";
+import { Head, router, usePage } from "@inertiajs/react";
 import { Hero } from "@/layouts";
-import { filterOptions, getFileTypeLabel, tabOptions } from "@/utils/fileOptions";
-import UploadFileModal from "@/components/molecules/UploadFileModal";
-import { MdDownload } from "react-icons/md";
-import { getStaffDisplayName } from "@/utils/staffOptions";
 import { getPath } from "@/utils/pathHelper";
+import { formatDate } from "@/utils/parserDate";
+import { getStaffDisplayName } from "@/utils/staffOptions";
+import { filterOptions, getFileTypeLabel, tabOptions } from "@/utils/fileOptions";
+import { TBerkasProps, TMedia, TUser } from "@/types/components/TBerkas";
+import useDeleteModal from "@/hooks/useDeleteModal";
+import UploadFileModal from "@/components/molecules/UploadFileModal";
+import DeleteFileModal from "@/components/molecules/DeleteFileModal";
+import DataTable from "@/components/organisms/DataTable";
 
 export default function Berkas({ files }: TBerkasProps) {
   const { flash, auth } = usePage().props;
@@ -20,6 +22,15 @@ export default function Berkas({ files }: TBerkasProps) {
   const [filter, setFilter] = useState("all");
   const [tabFilter, setTabFilter] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const {
+    isOpen: isDeleteModalOpen,
+    fileName,
+    mediaCount,
+    openDeleteModal,
+    closeDeleteModal,
+    confirmDelete,
+  } = useDeleteModal("berkas.destroy");
 
   useEffect(() => {
     if (flash.success) {
@@ -69,15 +80,6 @@ export default function Berkas({ files }: TBerkasProps) {
     const downloadUrl = route("berkas.download", id);
 
     window.location.href = downloadUrl;
-  };
-
-  const handleDelete = (id: number) => {
-    const confirmed = confirm("Anda yakin ingin menghapus data ini?");
-    if (!confirmed) return;
-
-    router.delete(route("berkas.destroy", id), {
-      preserveScroll: true,
-    });
   };
 
   return (
@@ -171,14 +173,19 @@ export default function Berkas({ files }: TBerkasProps) {
             {
               title: "Action",
               dataIndex: "action",
-              render: (_: unknown, __: unknown, record: { id: number; user_id: number }) => (
+              render: (_: unknown, __: unknown, record: { id: number; user_id: number; media?: TMedia[] }) => (
                 <section className="flex gap-2 justify-self-center">
                   <button onClick={() => handleDownload(record.id)} className="btn btn-success btn-sm">
                     <MdDownload className="text-lg text-white" />
                   </button>
 
                   {record.user_id === auth.user.id && (
-                    <button onClick={() => handleDelete(record.id)} className="btn btn-error btn-sm">
+                    <button
+                      onClick={() =>
+                        openDeleteModal(record.id, record.media?.[0]?.name ?? "Berkas", record.media?.length ?? 1)
+                      }
+                      className="btn btn-error btn-sm"
+                    >
                       <HiOutlineTrash className="text-lg text-white" />
                     </button>
                   )}
@@ -192,6 +199,14 @@ export default function Berkas({ files }: TBerkasProps) {
       </section>
 
       <UploadFileModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
+      <DeleteFileModal
+        isOpen={isDeleteModalOpen}
+        onClose={closeDeleteModal}
+        onConfirm={confirmDelete}
+        fileName={fileName}
+        mediaCount={mediaCount}
+      />
     </>
   );
 }

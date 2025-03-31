@@ -19,7 +19,7 @@ export default function UploadFileModal({ isOpen, onClose }: UploadFileModalProp
   const [isFileInputDisabled, setIsFileInputDisabled] = useState(true);
   const [files, setFiles] = useState<File[]>([]);
 
-  const { data, setData, post, processing } = useForm<{
+  const { setData, post, processing } = useForm<{
     user_id: number | undefined;
     files: File[];
   }>({
