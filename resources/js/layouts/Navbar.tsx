@@ -4,7 +4,7 @@ import { Link, usePage } from "@inertiajs/react";
 import { TNavLinksItem, TNavLinksChildren } from "@/types/layouts/TNavLinks";
 import { FaChevronDown } from "react-icons/fa";
 import { RiUserSettingsLine, RiLogoutBoxRLine } from "react-icons/ri";
-import { getAssetUrl, getStorageUrl } from "@/utils/pathHelper";
+import { getAssetUrl, getPath, getStorageUrl } from "@/utils/pathHelper";
 import { isActivePath } from "@/utils/router";
 
 export default function Navbar() {
@@ -68,7 +68,7 @@ export default function Navbar() {
 
         <section className="flex w-full items-center justify-between">
           {/* logo */}
-          <Link href="/" className="flex items-center gap-5 smdlg:hidden">
+          <Link href={getPath("/")} className="flex items-center gap-5 smdlg:hidden">
             <img src={getAssetUrl("images/logo2.png")} alt="logo1" width={80} className="-mr-4" />
             <h2 className="font-extrabold italic text-forest-green">{appName}</h2>
             <img src={getAssetUrl("images/logo.png")} alt="logo2" width={60} />
