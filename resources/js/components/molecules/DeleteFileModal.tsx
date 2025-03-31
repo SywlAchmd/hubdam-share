@@ -23,7 +23,7 @@ export default function DeleteFileModal({
     <dialog className="modal modal-open px-2">
       <section className="modal-box bg-white">
         <section className="flex flex-col gap-5">
-          <section className="flex items-center justify-between border-b border-black text-black">
+          <section className="flex items-center justify-between border-b-2 border-solid border-gray-300 pb-3 text-black">
             <h3 className="text-lg font-bold">Konfirmasi Hapus</h3>
             <HiOutlineX size={25} className="cursor-pointer" onClick={onClose} />
           </section>
