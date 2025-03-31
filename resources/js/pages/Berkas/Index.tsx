@@ -13,7 +13,7 @@ import { getStaffDisplayName } from "@/utils/staffOptions";
 import { getPath } from "@/utils/pathHelper";
 
 export default function Berkas({ files }: TBerkasProps) {
-  const { flash } = usePage().props;
+  const { flash, auth } = usePage().props;
   const { data, ...pagination } = files;
 
   const [search, setSearch] = useState("");
@@ -171,15 +171,17 @@ export default function Berkas({ files }: TBerkasProps) {
             {
               title: "Action",
               dataIndex: "action",
-              render: (_: unknown, __: unknown, record: { id: number }) => (
-                <section className="flex gap-2">
+              render: (_: unknown, __: unknown, record: { id: number; user_id: number }) => (
+                <section className="flex gap-2 justify-self-center">
                   <button onClick={() => handleDownload(record.id)} className="btn btn-success btn-sm">
                     <MdDownload className="text-lg text-white" />
                   </button>
 
-                  <button onClick={() => handleDelete(record.id)} className="btn btn-error btn-sm">
-                    <HiOutlineTrash className="text-lg text-white" />
-                  </button>
+                  {record.user_id === auth.user.id && (
+                    <button onClick={() => handleDelete(record.id)} className="btn btn-error btn-sm">
+                      <HiOutlineTrash className="text-lg text-white" />
+                    </button>
+                  )}
                 </section>
               ),
             },

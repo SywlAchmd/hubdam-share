@@ -44,7 +44,12 @@ class BerkasController extends Controller
             $query->where('user_id', '!=', auth()->id());
         }
 
-        $files = $query->orderBy("created_at", "desc")->paginate(5);
+        $files = $query->paginate(5)->through(function ($file) {
+            return [
+                ...$file->toArray(),
+                'user_id' => $file->user_id,
+            ];
+        });
 
         return Inertia::render('Berkas/Index', ['files' => $files]);
     }
