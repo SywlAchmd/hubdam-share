@@ -33,7 +33,7 @@ export default function Staff({ staff, type }: TStaffProps) {
       <Hero pageName={type} bgImage="divisi-bg.png" uppercase={true} />
       <section className="single-section-padding grid min-h-[80vh] gap-5">
         <section className="flex items-center justify-end">
-          <InputSearch value={search} onChange={setSearch} onSearch={handleSearch} onReset={handleReset} />
+          <InputSearch value={search} placeholder="Cari Nama Staff" onChange={setSearch} onSearch={handleSearch} onReset={handleReset} />
         </section>
 
         <section className="grid grid-cols-3 place-items-center gap-10 smdlg:grid-cols-2">

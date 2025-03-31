@@ -1,9 +1,9 @@
 import React from "react";
+import { PaginationProps } from "@/types/components/TPagination";
 import { Field } from "@headlessui/react";
 import SelectDropdown from "../atoms/SelectDropdown";
 import InputSearch from "../molecules/InputSearch";
 import FilterTabs from "../molecules/FilterTabs";
-import { PaginationProps } from "@/types/components/TPagination";
 import Pagination from "../molecules/Pagination";
 
 type DataTableProps = {
@@ -79,6 +79,7 @@ export default function DataTable({
                 onChange={onSearchChange || (() => {})}
                 onSearch={handleSearch || (() => {})}
                 onReset={handleReset || (() => {})}
+                placeholder="Cari Nama atau Berkas"
               />
             </div>
           )}
