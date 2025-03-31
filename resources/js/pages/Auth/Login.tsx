@@ -3,12 +3,13 @@ import InputLabel from "@/components/atoms/InputLabel";
 import PrimaryButton from "@/components/atoms/PrimaryButton";
 import TextInput from "@/components/atoms/TextInput";
 
-import { Head, useForm, usePage } from "@inertiajs/react";
-import { FormEventHandler } from "react";
-import { FaUser, FaLock } from "react-icons/fa";
+import { Head, useForm } from "@inertiajs/react";
+import { FormEventHandler, useState } from "react";
+import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Login({ status }: { status?: string }) {
   const basePath = "/hubdamshare";
+  const [showPassword, setShowPassword] = useState(false);
 
   const { data, setData, post, processing, errors, reset } = useForm({
     identifier: "",
@@ -24,13 +25,13 @@ export default function Login({ status }: { status?: string }) {
   };
 
   return (
-    <section className="flex h-screen w-full p-24 mdlg:p-10 sm:p-0">
+    <section className="flex h-screen w-full p-24 sm:p-0 mdlg:p-10">
       <Head title="Log in" />
 
       {/* image */}
       <section className="flex w-full overflow-hidden rounded-2xl bg-white shadow-2xl">
         <section className="h-auto w-1/2 smdlg:hidden">
-          <img src={`${basePath}/assets/images/login-bg.png`} alt="login-bg" className="..." />
+          <img src={`${basePath}/assets/images/login-bg.png`} alt="login-bg" className="h-full w-full object-cover" />
         </section>
 
         <section className="flex w-1/2 flex-col items-center justify-center smdlg:w-full">
@@ -69,7 +70,7 @@ export default function Login({ status }: { status?: string }) {
                   <FaLock size={20} fill="gray" />
                   <TextInput
                     id="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="password"
                     placeholder="Masukan Password"
                     value={data.password}
@@ -77,6 +78,10 @@ export default function Login({ status }: { status?: string }) {
                     autoComplete="current-password"
                     onChange={(e) => setData("password", e.target.value)}
                   />
+
+                  <button type="button" onClick={() => setShowPassword((prev) => !prev)} className="focus:outline-none">
+                    {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+                  </button>
                 </div>
 
                 <InputError message={errors.password} className="mt-2" />
