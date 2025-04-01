@@ -27,7 +27,7 @@
   }
 
   .section-title {
-    @apply border-l-8 border-solid border-forest-green px-4 text-3xl font-bold sm:border-l-4 sm:text-2xl text-black;
+    @apply border-l-8 border-solid border-forest-green px-4 text-3xl font-bold text-black sm:border-l-4 sm:text-2xl;
   }
 
   .section-bg {
@@ -194,6 +194,21 @@ q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+/* Remove the default eye icon shown by some browsers on password inputs */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+.input-no-eye::-webkit-credentials-auto-fill-button,
+.input-no-eye::-webkit-contacts-auto-fill-button {
+  display: none !important;
+}
+
+.input-no-eye::-webkit-textfield-decoration-container {
+  display: none !important;
 }
 
 /* ----------------------------------------- */
