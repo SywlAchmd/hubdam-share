@@ -95,6 +95,14 @@ export default function UploadFileModal({ isOpen, onClose, onStart, onFinish }: 
     });
   };
 
+  const handleClose = () => {
+    setSelectedFileType("");
+    setIsFileInputDisabled(true);
+    setFiles([]);
+    setData("files", []);
+    onClose();
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -102,13 +110,13 @@ export default function UploadFileModal({ isOpen, onClose, onStart, onFinish }: 
       <div className="modal-box bg-white">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <section className="flex items-center justify-between border-b-2 border-solid border-gray-300 pb-3 text-black">
-            <h3 className="text-lg font-bold">Upload File</h3>
-            <HiOutlineX size={25} className="cursor-pointer" onClick={onClose} />
+            <h3 className="text-lg font-bold">Unggah Berkas</h3>
+            <HiOutlineX size={25} className="cursor-pointer" onClick={handleClose} />
           </section>
 
           <section className="mb-1">
             <label htmlFor="file-type" className="block text-sm font-medium text-gray-700">
-              Pilih Tipe File<span className="text-red-500">*</span>
+              Pilih Tipe Berkas<span className="text-red-500">*</span>
             </label>
 
             <SelectDropdown
@@ -127,7 +135,7 @@ export default function UploadFileModal({ isOpen, onClose, onStart, onFinish }: 
 
           {files.length > 0 && (
             <div className="mt-4">
-              <h3 className="mb-2 text-sm font-medium text-gray-700">File yang sudah diupload:</h3>
+              <h3 className="mb-2 text-sm font-medium text-gray-700">Berkas yang sudah diunggah:</h3>
               <ul className="space-y-2">
                 {files.map((file, index) => (
                   <li key={index} className="flex items-center justify-between rounded-lg bg-gray-200 px-4 py-2">
@@ -146,12 +154,12 @@ export default function UploadFileModal({ isOpen, onClose, onStart, onFinish }: 
           )}
 
           <section className="modal-action">
-            <button className="btn btn-outline" type="button" onClick={onClose}>
-              Close
+            <button className="btn btn-outline" type="button" onClick={handleClose}>
+              Batal
             </button>
 
             <PrimaryButton className="text-sm" type="submit" disabled={processing}>
-              Submit
+              Unggah
             </PrimaryButton>
           </section>
         </form>

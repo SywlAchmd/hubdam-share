@@ -25,11 +25,11 @@ export default function InputSearch({ value, onChange, onSearch, onReset, placeh
       </section>
 
       <button className="btn btn-sm bg-forest-green text-white" onClick={onSearch}>
-        Search
+        Cari
       </button>
 
       <button className="btn btn-outline btn-sm border-forest-green text-forest-green" onClick={onReset}>
-        Reset
+        Atur Ulang
       </button>
     </section>
   );

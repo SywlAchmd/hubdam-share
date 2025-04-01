@@ -24,6 +24,9 @@ class EditAdmin extends EditRecord
     {
         return auth()->user()->id === $this->record->id
         ? []
-        : [Actions\DeleteAction::make()];
+        : [
+            Actions\DeleteAction::make()
+                ->modalHeading("Hapus Admin")
+        ];
     }
 }

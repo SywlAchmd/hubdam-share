@@ -109,14 +109,14 @@ export default function Profile() {
         {/* Profile picture */}
         <section className="section-bg w-1/4 overflow-hidden smd:w-full">
           <section className="bg-slate-200 p-3 font-medium text-olive-gray">Foto Profil</section>
-          <section className="flex flex-col items-center gap-4 p-10 text-xs">
+          <section className="flex flex-col items-center gap-4 p-9 text-xs">
             <img
               src={preview}
               alt="user_image"
               className="aspect-square w-32 cursor-pointer overflow-hidden rounded-full"
             />
 
-            <p>File tidak boleh lebih dari 2 MB</p>
+            <p>Gambar tidak boleh lebih dari 2 MB</p>
             <input
               id="image-upload"
               type="file"
@@ -130,7 +130,7 @@ export default function Profile() {
 
           <section className="flex w-full justify-center pb-8">
             <PrimaryButton className="text-sm" onClick={() => document.getElementById("image-upload")?.click()}>
-              Upload gambar
+              Unggah gambar
             </PrimaryButton>
           </section>
         </section>
@@ -141,7 +141,7 @@ export default function Profile() {
 
           <form className="flex flex-col gap-4 p-5" onSubmit={handleSubmit}>
             <FormInput
-              label="Name"
+              label="Nama"
               value={data.name}
               onChange={(e) => setData("name", e.target.value)}
               error={errors?.name}
@@ -168,7 +168,7 @@ export default function Profile() {
             />
 
             <FormInput
-              label="Staff"
+              label="Staf"
               value={data.staff}
               onChange={(e) => setData("staff", e.target.value)}
               error={errors?.staff}

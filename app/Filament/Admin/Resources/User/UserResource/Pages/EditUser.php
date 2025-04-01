@@ -26,6 +26,9 @@ class EditUser extends EditRecord
             return [];
         }
     
-        return [Actions\DeleteAction::make()];
+        return [
+            Actions\DeleteAction::make()
+                ->modalHeading("Hapus Pengguna")
+        ];
     }
 }

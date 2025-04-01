@@ -10,7 +10,7 @@ class EditWord extends EditRecord
 {
     protected static string $resource = WordResource::class;
 
-    protected static ?string $title = 'Ubah Dokumen';
+    protected static ?string $title = 'Ubah Berkas';
 
     protected function getRedirectUrl(): string
     {
@@ -20,7 +20,8 @@ class EditWord extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()
+                ->modalHeading("Hapus Berkas"),
         ];
     }
 }

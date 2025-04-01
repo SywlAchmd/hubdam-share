@@ -10,7 +10,7 @@ class CreatePowerPoint extends CreateRecord
 {
     protected static string $resource = PowerPointResource::class;
 
-    protected static ?string $title = 'Buat Dokumen';
+    protected static ?string $title = 'Buat Berkas';
 
     protected function getRedirectUrl(): string
     {

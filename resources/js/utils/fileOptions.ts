@@ -1,5 +1,5 @@
 export const fileTypeOptions = [
-  { value: "", label: "--Pilih tipe file yang ingin diupload--" },
+  { value: "", label: "--Pilih tipe berkas yang ingin diunggah--" },
   { value: "excel", label: "Excel" },
   { value: "word", label: "Word" },
   { value: "ppt", label: "PPT" },
@@ -19,7 +19,7 @@ export const filterOptions = [
 export const tabOptions = [
   { label: "Semua", value: "all" },
   { label: "Saya", value: "mine" },
-  { label: "Staff Lain", value: "staff" },
+  { label: "Staf Lain", value: "staff" },
 ];
 
 export const fileTypeLabels: Record<string, string> = {

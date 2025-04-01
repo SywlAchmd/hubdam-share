@@ -101,7 +101,7 @@ export default function DataTable({
               {dataSource.length === 0 ? (
                 <tr>
                   <td className="py-6 text-center" colSpan={columns.length}>
-                    Tidak ada data tersedia...
+                    Tidak ada berkas yang tersedia...
                   </td>
                 </tr>
               ) : (

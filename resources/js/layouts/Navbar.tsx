@@ -157,7 +157,7 @@ export default function Navbar() {
                 onClick={handleProfileLinkClick}
               >
                 <RiLogoutBoxRLine />
-                <p>Logout</p>
+                <p>Keluar</p>
               </Link>
             </section>
           </section>

@@ -31,7 +31,7 @@ export const CropperModal: React.FC<CropperModalProps> = ({ imageSrc, isOpen, on
   return (
     <dialog open={isOpen} className="modal modal-open">
       <form method="dialog" className="modal-box w-11/12 max-w-2xl bg-white">
-        <h3 className="mb-4 text-lg font-bold text-black">Crop Image</h3>
+        <h3 className="mb-4 text-lg font-bold text-black">Potong Gambar</h3>
 
         <div className="relative h-80 w-full bg-gray-100">
           <Cropper
@@ -54,20 +54,20 @@ export const CropperModal: React.FC<CropperModalProps> = ({ imageSrc, isOpen, on
             step={0.1}
             value={zoom}
             onChange={(e) => setZoom(Number(e.target.value))}
-            className="range range-neutral"
+            className="range-neutral range"
           />
         </div>
 
         <div className="modal-action mt-4 flex justify-between">
           <button type="button" className="btn btn-outline btn-error" onClick={onClose}>
-            Cancel
+            Batal
           </button>
           <button
             type="button"
             className="btn bg-forest-green text-white hover:bg-forest-green-dark"
             onClick={handleCropComplete}
           >
-            Crop
+            Simpan
           </button>
         </div>
       </form>

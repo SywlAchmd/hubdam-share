@@ -126,7 +126,7 @@ export default function Berkas({ files }: TBerkasProps) {
               render: (value: TUser) => value.name,
             },
             {
-              title: "Staff",
+              title: "Staf",
               dataIndex: "user",
               render: (value: TUser) => getStaffDisplayName(value.staff),
             },
@@ -174,7 +174,7 @@ export default function Berkas({ files }: TBerkasProps) {
               render: (value: string) => formatDate(new Date(value)),
             },
             {
-              title: "Action",
+              title: "Aksi",
               dataIndex: "action",
               render: (_: unknown, __: unknown, record: { id: number; user_id: number; media?: TMedia[] }) => (
                 <section className="flex gap-2 justify-self-center">

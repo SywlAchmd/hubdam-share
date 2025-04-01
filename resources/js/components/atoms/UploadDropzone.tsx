@@ -24,9 +24,11 @@ export default function UploadDropzone({ selectedFileType, isFileInputDisabled, 
     >
       <input {...getInputProps()} />
       {isFileInputDisabled ? (
-        <p className="text-center text-gray-400">Pilih tipe file terlebih dahulu sebelum mengupload.</p>
+        <p className="text-center text-gray-400">Pilih tipe berkas terlebih dahulu sebelum mengunggah.</p>
       ) : (
-        <p className="text-center text-gray-700">Drag dan drop file di sini, atau klik untuk memilih file.</p>
+        <p className="px-1.5 text-center text-gray-700">
+          Seret dan jatuhkan berkas di sini, atau klik untuk memilih berkas.
+        </p>
       )}
     </div>
   );

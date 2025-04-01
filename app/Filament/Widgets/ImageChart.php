@@ -8,11 +8,11 @@ use Illuminate\Contracts\Support\Htmlable;
 
 class ImageChart extends ChartWidget
 {
-    protected static ?string $heading = 'Jumlah Gambar yang Diupload';
+    protected static ?string $heading = 'Jumlah Gambar yang Diunggah';
 
     public function getDescription(): string|Htmlable|null
     {
-        return "Total gambar yang telah diupload untuk setiap jenisnya";
+        return "Total gambar yang telah diunggah untuk setiap jenisnya";
     }
 
     protected static ?array $options = [

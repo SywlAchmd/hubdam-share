@@ -99,7 +99,7 @@ class BerkasController extends Controller
                 ->toMediaCollection($collectionName);
         }
 
-        return redirect()->route('berkas')->with('success', 'File uploaded successfully.');
+        return redirect()->route('berkas')->with('success', 'Berkas berhasil diunggah!');
     }
 
     /**
@@ -119,7 +119,7 @@ class BerkasController extends Controller
 
         $file->delete();
 
-        return redirect()->route('berkas')->with('success', 'File deleted successfully.');
+        return redirect()->route('berkas')->with('success', 'Berkas berhasil dihapus!');
     }
 
     /**

@@ -10,7 +10,7 @@ class CreatePDF extends CreateRecord
 {
     protected static string $resource = PDFResource::class;
 
-    protected static ?string $title = 'Buat Dokumen';
+    protected static ?string $title = 'Buat Berkas';
 
     protected function getRedirectUrl(): string
     {

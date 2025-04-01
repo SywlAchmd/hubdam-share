@@ -6,6 +6,7 @@ use App\Filament\Admin\Resources\User\UserResource\Pages;
 use App\Filament\Admin\Resources\UserResource\RelationManagers;
 use App\Helpers\FileHelper;
 use App\Models\User;
+use App\Tables\Columns\NameWithPhoto;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -58,7 +59,17 @@ class UserResource extends Resource
                             ->dehydrateStateUsing(fn($state) => Hash::make($state))
                             ->dehydrated(fn($state) => \filled($state))
                             ->required(fn(string $context): bool => $context === 'create'),
+                        Forms\Components\Select::make('role')
+                            ->options([
+                                '1' => 'Admin',
+                                '2' => 'Staf'
+                            ])
+                            ->native(false)
+                            ->required()
+                            ->columnSpanFull()
+                            ->hidden(fn (string $operation): bool => $operation === 'create' || auth()->user()->role != 0),
                         Forms\Components\Select::make('staff')
+                            ->label('Staf')
                             ->searchable()
                             ->options(FileHelper::getStaffOptions())
                             ->default(fn() => auth()->user()->staff ?? null)
@@ -70,7 +81,7 @@ class UserResource extends Resource
                     ->columns(2),
                 Forms\Components\Section::make()
                     ->heading('Foto Profil')
-                    ->description('Upload foto pengguna di sini')
+                    ->description('Unggah foto pengguna di sini')
                     ->schema([
                         Forms\Components\FileUpload::make('image')
                             ->label("Gambar")
@@ -86,14 +97,15 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->emptyStateHeading("Tidak ada pengguna yang ditemukan")
+            ->emptyStateDescription("Buat pengguna untuk memulai")
             ->defaultSort('role', 'asc')
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                NameWithPhoto::make('name')
                     ->label("Nama")
-                    ->icon(fn(User $record) => $record->image ? Storage::disk('public')->url($record->image) : asset('assets/images/default_avatar.jpg'))
-                    ->size(Tables\Columns\TextColumn\TextColumnSize::Medium)
-                    ->weight(\Filament\Support\Enums\FontWeight::Medium)
-                    ->wrap()
+                    // ->icon(fn(User $record) => $record->image ? Storage::disk('public')->url($record->image) : asset('assets/images/default_avatar.jpg'))
+                    // ->size(Tables\Columns\TextColumn\TextColumnSize::Medium)
+                    // ->weight(\Filament\Support\Enums\FontWeight::Medium)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('username')
                     ->searchable(),
@@ -103,9 +115,10 @@ class UserResource extends Resource
                     ->searchable()
                     ->formatStateUsing(fn($state) => match ($state) {
                         '1' => 'Admin',
-                        '2' => 'Staff',
+                        '2' => 'Staf',
                     }),
                 Tables\Columns\TextColumn::make('staff')
+                    ->label('Staf')
                     ->searchable()
                     ->formatStateUsing(function ($state) {
                         $options = FileHelper::getStaffOptions();
@@ -118,7 +131,7 @@ class UserResource extends Resource
                     ->native(false)
                     ->options([
                         '1' => 'Admin',
-                        '2' => 'Staff',
+                        '2' => 'Staf',
                     ])
                     ->label('Role'),
                 Tables\Filters\SelectFilter::make('staff')

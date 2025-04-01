@@ -23,7 +23,7 @@ class ExcelResource extends Resource
 
     protected static ?string $navigationLabel = 'Excel';
 
-    protected static ?string $navigationGroup = 'Dokumen';
+    protected static ?string $navigationGroup = 'Berkas';
 
     protected static ?int $navigationSort = 4;
 
@@ -41,7 +41,7 @@ class ExcelResource extends Resource
                 Forms\Components\Hidden::make('user_id')
                     ->default(auth()->user()->id),
                 Forms\Components\SpatieMediaLibraryFileUpload::make('File Upload')
-                    ->label('Unggah Dokumen')
+                    ->label('Unggah Berkas')
                     ->acceptedFileTypes([
                         "text/csv",
                         'application/vnd.ms-excel',
@@ -58,17 +58,19 @@ class ExcelResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->emptyStateHeading("Tidak ada berkas yang ditemukan")
+            ->emptyStateDescription("Buat berkas untuk memulai")
             ->defaultSort('updated_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Nama')
                     ->searchable(),
 	        Tables\Columns\TextColumn::make('user.staff')
-                    ->label('Staff')
+                    ->label('Staf')
                     ->searchable()
                     ->formatStateUsing(fn ($state) => FileHelper::getStaffOptions()[$state]),
                 Tables\Columns\TextColumn::make('Files')
-                    ->label("Dokumen")
+                    ->label("Berkas")
                     ->getStateUsing(function ($record) {
                         $files = $record->getMedia('file-excel');
 
@@ -91,7 +93,7 @@ class ExcelResource extends Resource
                     ->label('Waktu')
                     ->formatStateUsing(fn($state) => $state->format('d M Y, H:i')),
                 Tables\Columns\TextColumn::make('Size')
-                    ->label('Ukuran Dokumen')
+                    ->label('Ukuran Berkas')
                     ->getStateUsing(function ($record) {
                         $files = $record->getMedia('file-excel');
 
@@ -106,7 +108,7 @@ class ExcelResource extends Resource
 	    ->filters([
                 Tables\Filters\Filter::make('staff')->form([
                     Forms\Components\Select::make('staff')
-                        ->label('Staff')
+                        ->label('Staf')
                         ->options(FileHelper::getStaffOptions())
                         ->searchable()
                         ->preload()
@@ -130,13 +132,13 @@ class ExcelResource extends Resource
                         return null;
                     }
 
-                    return 'Staff: ' . FileHelper::getStaffOptions()[$staff] ?? $staff;
+                    return 'Staf: ' . FileHelper::getStaffOptions()[$staff] ?? $staff;
                 })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('download')
-                    ->label('Download')
+                    ->label('Unduh')
                     ->color('info')
                     ->icon("heroicon-m-arrow-down-tray")
                     ->action(fn($record) => FileHelper::downloadFiles($record, 'file-excel')),

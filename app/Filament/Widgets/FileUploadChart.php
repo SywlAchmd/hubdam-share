@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class FileUploadChart extends ChartWidget
 {
-    protected static ?string $heading = 'Jumlah Dokumen Berdasarkan Bulan';
+    protected static ?string $heading = 'Jumlah Berkas Berdasarkan Bulan';
 
     public function getDescription(): string|Htmlable|null
     {
-        return "Menampilkan semua dokumen yang diupload setiap bulannya";
+        return "Menampilkan semua berkas yang diunggah setiap bulannya";
     }
 
     protected function getFileDataByType(string $type, int $year): array

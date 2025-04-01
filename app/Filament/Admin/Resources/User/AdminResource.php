@@ -73,6 +73,7 @@ class AdminResource extends Resource
                             ->native(false)
                             ->required(),
                         Forms\Components\Select::make('staff')
+                            ->label('Staf')
                             ->searchable()
                             ->options(FileHelper::getStaffOptions())
                             ->native(false)
@@ -80,7 +81,7 @@ class AdminResource extends Resource
                     ->columns(2),
                 Forms\Components\Section::make()
                     ->heading('Foto Profil')
-                    ->description('Upload foto di sini')
+                    ->description('Unggah foto di sini')
                     ->schema([
                         Forms\Components\FileUpload::make('image')
                             ->label("Gambar")
@@ -96,6 +97,8 @@ class AdminResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->emptyStateHeading("Tidak ada admin yang ditemukan")
+            ->emptyStateDescription("Buat admin untuk memulai")
             ->defaultSort('role', 'asc')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
@@ -103,7 +106,6 @@ class AdminResource extends Resource
                     ->icon(fn(User $record) => $record->image ? Storage::disk('public')->url($record->image) : asset('assets/images/default_avatar.jpg'))
                     ->size(Tables\Columns\TextColumn\TextColumnSize::Medium)
                     ->weight(\Filament\Support\Enums\FontWeight::Medium)
-                    ->wrap()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('username')
                     ->searchable(),
@@ -114,9 +116,10 @@ class AdminResource extends Resource
                     ->formatStateUsing(fn($state) => match ($state) {
                         '0' => 'Superadmin',
                         '1' => 'Admin',
-                        '2' => 'Staff',
+                        '2' => 'Staf',
                     }),
                 Tables\Columns\TextColumn::make('staff')
+                    ->label('Staf')
                     ->searchable()
                     ->formatStateUsing(function ($state) {
                         $options = FileHelper::getStaffOptions();

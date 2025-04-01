@@ -23,7 +23,7 @@ class ListWords extends ListRecords
         return [
             null => Tab::make('Semua'),
             'mine' => Tab::make('Saya')->query(fn ($query) => $query->where('user_id', auth()->user()->id)),
-            'others' => Tab::make('Staff Lain')->query(fn ($query) => $query->where('user_id', '!=' , auth()->user()->id)),
+            'others' => Tab::make('Staf Lain')->query(fn ($query) => $query->where('user_id', '!=' , auth()->user()->id)),
         ];
     }
 }
