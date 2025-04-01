@@ -1,8 +1,8 @@
 import FullscreenLoader from "@/components/atoms/FullScreenLoader";
 import InputError from "@/components/atoms/InputError";
 import PrimaryButton from "@/components/atoms/PrimaryButton";
-import { CropperModal } from "@/components/molecules/CropperModal";
 import FormInput from "@/components/molecules/FormInput";
+import { ClientOnly } from "@/components/ssr/ClientOnly";
 import useLoadingSubmit from "@/hooks/useLoadingSubmit";
 import { getAssetUrl, getStorageUrl } from "@/utils/pathHelper";
 import { Head, useForm, usePage } from "@inertiajs/react";
@@ -204,11 +204,15 @@ export default function Profile() {
         </section>
       </section>
 
-      <CropperModal
-        imageSrc={selectedImage ?? ""}
-        isOpen={isCropperOpen}
-        onClose={() => setIsCropperOpen(false)}
-        onCropComplete={handleImageCrop}
+      <ClientOnly
+        loader={() => import("@/components/molecules/CropperModal")}
+        fallback={null}
+        props={{
+          imageSrc: selectedImage ?? "",
+          isOpen: isCropperOpen,
+          onClose: () => setIsCropperOpen(false),
+          onCropComplete: handleImageCrop,
+        }}
       />
 
       {loading && <FullscreenLoader />}

@@ -9,7 +9,7 @@ interface CropperModalProps {
   onCropComplete: (croppedImage: string) => void;
 }
 
-export const CropperModal: React.FC<CropperModalProps> = ({ imageSrc, isOpen, onClose, onCropComplete }) => {
+const CropperModal: React.FC<CropperModalProps> = ({ imageSrc, isOpen, onClose, onCropComplete }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1.2);
   const [croppedArea, setCroppedArea] = useState<any>(null);
@@ -74,3 +74,5 @@ export const CropperModal: React.FC<CropperModalProps> = ({ imageSrc, isOpen, on
     </dialog>
   );
 };
+
+export default CropperModal;

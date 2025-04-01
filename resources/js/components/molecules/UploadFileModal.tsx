@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useForm, usePage } from "@inertiajs/react";
-import PrimaryButton from "../atoms/PrimaryButton";
+import PrimaryButton from "@/components/atoms/PrimaryButton";
 import SelectDropdown from "@/components/atoms/SelectDropdown";
-import UploadDropzone from "@/components/atoms/UploadDropzone";
 import { fileTypeOptions } from "@/utils/fileOptions";
 import { getAcceptedFileTypes } from "@/utils/fileValidate";
 import { HiOutlineX } from "react-icons/hi";
+import { ClientOnly } from "../ssr/ClientOnly";
 
 interface UploadFileModalProps {
   isOpen: boolean;
@@ -127,10 +127,14 @@ export default function UploadFileModal({ isOpen, onClose, onStart, onFinish }: 
             />
           </section>
 
-          <UploadDropzone
-            selectedFileType={selectedFileType}
-            isFileInputDisabled={isFileInputDisabled}
-            onDrop={onDrop}
+          <ClientOnly
+            loader={() => import("@/components/atoms/UploadDropzone")}
+            fallback={<div>Memuat area unggahan...</div>}
+            props={{
+              selectedFileType,
+              isFileInputDisabled,
+              onDrop,
+            }}
           />
 
           {files.length > 0 && (

@@ -2,7 +2,7 @@ import "./bootstrap";
 import "../css/app.css";
 
 import { createInertiaApp } from "@inertiajs/react";
-import { createRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import { Layout } from "./layouts";
 import { Toaster } from "sonner";
 
@@ -23,7 +23,7 @@ createInertiaApp({
     return page;
   },
   setup({ el, App, props }) {
-    createRoot(el).render(
+    const content = (
       <>
         <App {...props} />
         <Toaster
@@ -33,7 +33,16 @@ createInertiaApp({
           closeButton
           duration={2000}
         />
-      </>,
+      </>
     );
+
+    if (import.meta.env.SSR) {
+      hydrateRoot(el, content);
+    } else {
+      createRoot(el).render(content);
+    }
   },
 });
+// .then(() => {
+//   document.getElementById('app')?.removeAttribute('data-page');
+// });;
