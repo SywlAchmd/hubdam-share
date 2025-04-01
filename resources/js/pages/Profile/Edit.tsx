@@ -1,7 +1,9 @@
+import FullscreenLoader from "@/components/atoms/FullScreenLoader";
 import InputError from "@/components/atoms/InputError";
 import PrimaryButton from "@/components/atoms/PrimaryButton";
 import { CropperModal } from "@/components/molecules/CropperModal";
 import FormInput from "@/components/molecules/FormInput";
+import useLoadingSubmit from "@/hooks/useLoadingSubmit";
 import { getAssetUrl, getStorageUrl } from "@/utils/pathHelper";
 import { Head, useForm, usePage } from "@inertiajs/react";
 import { FormEventHandler, useEffect, useState } from "react";
@@ -16,6 +18,8 @@ export default function Profile() {
 
   const [isCropperOpen, setIsCropperOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const { loading, submit } = useLoadingSubmit();
 
   useEffect(() => {
     if (flash.success) {
@@ -38,10 +42,10 @@ export default function Profile() {
     password_confirmation: "",
   });
 
-  const handleSubmit: FormEventHandler = async (e) => {
+  const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
 
-    post(route("profile.update"), {
+    submit("post", route("profile.update"), data, {
       preserveScroll: true,
       onSuccess: () => {
         reset("password", "password_confirmation");
@@ -206,6 +210,8 @@ export default function Profile() {
         onClose={() => setIsCropperOpen(false)}
         onCropComplete={handleImageCrop}
       />
+
+      {loading && <FullscreenLoader />}
     </>
   );
 }

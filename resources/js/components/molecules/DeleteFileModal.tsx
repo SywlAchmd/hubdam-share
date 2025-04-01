@@ -8,6 +8,7 @@ interface DeleteFileModalProps {
   onConfirm: () => void;
   fileName?: string;
   mediaCount?: number;
+  isLoading?: boolean;
 }
 
 export default function DeleteFileModal({
@@ -16,6 +17,7 @@ export default function DeleteFileModal({
   onConfirm,
   fileName,
   mediaCount = 1,
+  isLoading,
 }: DeleteFileModalProps) {
   if (!isOpen) return null;
 
@@ -44,7 +46,7 @@ export default function DeleteFileModal({
           <button className="btn btn-outline" onClick={onClose}>
             Batal
           </button>
-          <PrimaryButton className="bg-red-600 text-sm hover:bg-red-700" onClick={onConfirm}>
+          <PrimaryButton className="bg-red-600 text-sm hover:bg-red-700" onClick={onConfirm} disabled={isLoading}>
             Hapus
           </PrimaryButton>
         </div>

@@ -13,6 +13,7 @@ import useDeleteModal from "@/hooks/useDeleteModal";
 import UploadFileModal from "@/components/molecules/UploadFileModal";
 import DeleteFileModal from "@/components/molecules/DeleteFileModal";
 import DataTable from "@/components/organisms/DataTable";
+import FullscreenLoader from "@/components/atoms/FullScreenLoader";
 
 export default function Berkas({ files }: TBerkasProps) {
   const { flash, auth } = usePage().props;
@@ -22,6 +23,7 @@ export default function Berkas({ files }: TBerkasProps) {
   const [filter, setFilter] = useState("all");
   const [tabFilter, setTabFilter] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   const {
     isOpen: isDeleteModalOpen,
@@ -30,6 +32,7 @@ export default function Berkas({ files }: TBerkasProps) {
     openDeleteModal,
     closeDeleteModal,
     confirmDelete,
+    isDeleting,
   } = useDeleteModal("berkas.destroy");
 
   useEffect(() => {
@@ -198,7 +201,12 @@ export default function Berkas({ files }: TBerkasProps) {
         />
       </section>
 
-      <UploadFileModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <UploadFileModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onStart={() => setIsUploading(true)}
+        onFinish={() => setIsUploading(false)}
+      />
 
       <DeleteFileModal
         isOpen={isDeleteModalOpen}
@@ -206,7 +214,10 @@ export default function Berkas({ files }: TBerkasProps) {
         onConfirm={confirmDelete}
         fileName={fileName}
         mediaCount={mediaCount}
+        isLoading={isDeleting}
       />
+
+      {(isUploading || isDeleting) && <FullscreenLoader />}
     </>
   );
 }

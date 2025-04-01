@@ -10,9 +10,11 @@ import { HiOutlineX } from "react-icons/hi";
 interface UploadFileModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onStart?: () => void;
+  onFinish?: () => void;
 }
 
-export default function UploadFileModal({ isOpen, onClose }: UploadFileModalProps) {
+export default function UploadFileModal({ isOpen, onClose, onStart, onFinish }: UploadFileModalProps) {
   const { auth } = usePage().props;
 
   const [selectedFileType, setSelectedFileType] = useState("");
@@ -76,12 +78,19 @@ export default function UploadFileModal({ isOpen, onClose }: UploadFileModalProp
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    onStart?.();
+
     post(route("berkas.store"), {
       preserveScroll: true,
       onSuccess: () => {
         setSelectedFileType("");
         setFiles([]);
+        onFinish?.();
         onClose();
+      },
+      onError: () => {
+        onFinish?.();
       },
     });
   };
