@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
 
 interface ClientOnlyProps {
   loader: () => Promise<{ default: React.ComponentType<any> }>;
@@ -6,19 +6,25 @@ interface ClientOnlyProps {
   props?: Record<string, any>;
 }
 
-export const ClientOnly = ({ loader, fallback = null, props = {} }: ClientOnlyProps) => {
-  const [ready, setReady] = React.useState(false);
-  const Component = React.useMemo(() => lazy(loader), [loader]);
+export function ClientOnly({ loader, fallback = null, props = {} }: ClientOnlyProps) {
+  const [Component, setComponent] = useState<React.ComponentType<any> | null>(null);
 
-  React.useEffect(() => {
-    setReady(true);
-  }, []);
+  useEffect(() => {
+    let mounted = true;
+    loader().then((mod) => {
+      if (mounted) setComponent(() => mod.default);
+    });
 
-  return ready ? (
+    return () => {
+      mounted = false;
+    };
+  }, [loader]);
+
+  if (!Component) return <>{fallback}</>;
+
+  return (
     <Suspense fallback={fallback}>
       <Component {...props} />
     </Suspense>
-  ) : (
-    <>{fallback}</>
   );
-};
+}
