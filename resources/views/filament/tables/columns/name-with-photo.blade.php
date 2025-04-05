@@ -4,7 +4,7 @@
         alt="{{ $getState()['name'] }}"
         class="w-11 aspect-square rounded-full object-cover ring-2 ring-white dark:ring-gray-900"
     />
-    <span class="text-base font-medium text-gray-800 dark:text-white">
+    <span class="text-base font-medium text-gray-800 dark:text-white truncate">
         {{ $getState()['name'] }}
     </span>
 </div>

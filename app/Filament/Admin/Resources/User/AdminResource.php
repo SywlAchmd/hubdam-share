@@ -6,6 +6,7 @@ use App\Filament\Admin\Resources\User\AdminResource\Pages;
 use App\Filament\Admin\Resources\AdminResource\RelationManagers;
 use App\Helpers\FileHelper;
 use App\Models\User;
+use App\Tables\Columns\NameWithPhoto;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -101,11 +102,8 @@ class AdminResource extends Resource
             ->emptyStateDescription("Buat admin untuk memulai")
             ->defaultSort('role', 'asc')
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                NameWithPhoto::make('name')
                     ->label("Nama")
-                    ->icon(fn(User $record) => $record->image ? Storage::disk('public')->url($record->image) : asset('assets/images/default_avatar.jpg'))
-                    ->size(Tables\Columns\TextColumn\TextColumnSize::Medium)
-                    ->weight(\Filament\Support\Enums\FontWeight::Medium)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('username')
                     ->searchable(),
