@@ -19,7 +19,7 @@ export default function Profile() {
   const [isCropperOpen, setIsCropperOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const { loading, submit } = useLoadingSubmit();
+  const { loading, getOptionsWithLoading } = useLoadingSubmit();
 
   useEffect(() => {
     if (flash.success) {
@@ -45,12 +45,15 @@ export default function Profile() {
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
 
-    submit("post", route("profile.update"), data, {
-      preserveScroll: true,
-      onSuccess: () => {
-        reset("password", "password_confirmation");
-      },
-    });
+    post(
+      route("profile.update"),
+      getOptionsWithLoading({
+        preserveScroll: true,
+        onSuccess: () => {
+          reset("password", "password_confirmation");
+        },
+      }),
+    );
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {

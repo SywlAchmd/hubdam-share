@@ -21,17 +21,19 @@ class UpdateProfileRequest extends FormRequest
 	 */
 	public function rules(): array
 	{
-		return [
+		$rules = [
 			'name' => 'required|string|max:50',
 			'username' => 'required|string|max:20|unique:users,username,' . $this->user()->id,
 			'email' => 'required|string|email|max:50|unique:users,email,' . $this->user()->id,
 			'staff' => 'nullable|string|max:50',
 			'password' => 'nullable|string|min:5|confirmed',
 		];
-
+	
 		if ($this->hasFile('image')) {
 			$rules['image'] = 'image|mimes:jpeg,png,jpg|max:2048';
 		}
+	
+		return $rules;
 	}
 
 	/**
