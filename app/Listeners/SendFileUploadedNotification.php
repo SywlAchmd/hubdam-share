@@ -34,11 +34,12 @@ class SendFileUploadedNotification implements ShouldQueue
 
         $file = $media->model;
         $uploader = $file->user->name;
-        $type = strtoupper(last(explode('/', $media->mime_type)));
 
         $admins = User::whereIn('role', [0, 1])->get();
 
         $collection = $media->collection_name;
+        
+        $type = strtoupper(last(explode('-', $collection)));
         $resource = FileHelper::resolveResourceFromCollection($collection);
 
         Notification::make()
