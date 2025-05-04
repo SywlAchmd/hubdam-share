@@ -5,6 +5,18 @@ import { resolve } from "node:path";
 
 export default defineConfig({
   base: "/hubdamshare/",
+  server: {
+    host: "0.0.0.0",
+    port: 5173,
+    strictPort: true,
+    cors: {
+      origin: "http://hubdamdigidaw.com",
+      credentials: true,
+    },
+    hmr: {
+      host: "hubdamdigidaw.com",
+    },
+  },
   plugins: [
     laravel({
       input: ["resources/css/app.css", "resources/js/app.tsx", "resources/css/filament/admin/theme.css"],
