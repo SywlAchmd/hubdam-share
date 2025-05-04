@@ -39,7 +39,7 @@ class SendFileUploadedNotification implements ShouldQueue
 
         $collection = $media->collection_name;
         
-        $type = strtoupper(last(explode('-', $collection)));
+        $type = FileHelper::resolveFileTypeLabelFromCollection($collection);
         $resource = FileHelper::resolveResourceFromCollection($collection);
 
         Notification::make()

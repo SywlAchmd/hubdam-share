@@ -111,4 +111,17 @@ class FileHelper
       default => null,
     };
   }
+
+  public static function resolveFileTypeLabelFromCollection(string $collection): ?string
+  {
+    return match ($collection) {
+      'file-pdf' => 'PDF',
+      'file-word' => 'Word',
+      'file-excel' => 'Excel',
+      'file-ppt' => 'PPT',
+      'file-image' => 'Gambar',
+      default => null,
+    };
+  }
+
 }
