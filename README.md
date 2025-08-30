@@ -1,5 +1,8 @@
 # Hubdam Share
 
+> This website was built using **React v18.3.1**, **Inertia.js v2.0.0**, **Node.js v20+**, **TypeScript v5.7.2**, **Tailwind CSS v3.4.17**, **PHP v8.2+**, **Laravel v11.36.1**, **FilamentPHP v3.2.128**
+
+
 ## 🚀 Features
 
 - **Monolithic architecture** — Backend & frontend in a single repository
